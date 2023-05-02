@@ -46,18 +46,25 @@ Lista *nova_lista(
     return lista;
 }
 
-void excluir_lista(Lista *lista)
+void limpar_lista(Lista *lista)
 {
     while (lista->primeiro_item != NULL)
     {
         Item *item = lista->primeiro_item;
-        lista->primeiro_item = item->proximo;
 
+        lista->primeiro_item = item->proximo;
         lista->liberar_dados_item(item->dados);
+
         free(item);
         item = lista->primeiro_item;
     }
 
+    lista->tamanho = 0;
+}
+
+void excluir_lista(Lista *lista)
+{
+    limpar_lista(lista);
     free(lista);
 }
 
@@ -89,7 +96,7 @@ int posicao_item(Lista *lista, void *dados)
     Item *item = lista->primeiro_item;
     while (item != NULL)
     {
-        if (lista->comparar_dados_itens(item->dados, dados) == 1)
+        if (lista->comparar_dados_itens(item->dados, dados) == 0)
         {
             posicao = posicao_atual;
             break;

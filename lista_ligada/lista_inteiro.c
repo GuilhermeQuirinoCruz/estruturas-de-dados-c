@@ -27,6 +27,12 @@ int comparar_inteiros(void *inteiro1, void *inteiro2)
     return(numero1->valor - numero2->valor);
 }
 
+void alterar_inteiro(void *inteiro, void *dados)
+{
+    Numero *numero = (Numero *)inteiro;
+    numero->valor = *(int *)dados;
+}
+
 void imprimir_inteiro(void *inteiro)
 {
     Numero *numero = (Numero *)inteiro;
@@ -35,5 +41,5 @@ void imprimir_inteiro(void *inteiro)
 
 Lista *nova_lista_inteiro()
 {
-    Lista *lista = nova_lista(liberar_inteiro, comparar_inteiros, imprimir_inteiro);
+    Lista *lista = nova_lista(liberar_inteiro, comparar_inteiros, alterar_inteiro, imprimir_inteiro);
 }

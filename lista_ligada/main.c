@@ -8,9 +8,9 @@ int main()
 
     printf("Criando nova lista:\n");
     Lista *lista_inteiro = nova_lista_inteiro();
-    inserir_item(lista_inteiro, novo_item(novo_inteiro(10)));
-    inserir_item(lista_inteiro, novo_item(novo_inteiro(20)));
-    inserir_item(lista_inteiro, novo_item(novo_inteiro(30)));
+    inserir_item(lista_inteiro, novo_inteiro(10));
+    inserir_item(lista_inteiro, novo_inteiro(20));
+    inserir_item(lista_inteiro, novo_inteiro(30));
     imprimir_lista(lista_inteiro);
 
     printf("\nInvertendo:\n");
@@ -22,11 +22,11 @@ int main()
     imprimir_lista(lista_inteiro);
 
     printf("\nInserindo novos itens:\n");
-    inserir_item(lista_inteiro, novo_item(novo_inteiro(1)));
-    inserir_item(lista_inteiro, novo_item(novo_inteiro(3)));
-    inserir_item(lista_inteiro, novo_item(novo_inteiro(5)));
-    inserir_item(lista_inteiro, novo_item(novo_inteiro(4)));
-    inserir_item(lista_inteiro, novo_item(novo_inteiro(2)));
+    inserir_item(lista_inteiro, novo_inteiro(1));
+    inserir_item(lista_inteiro, novo_inteiro(3));
+    inserir_item(lista_inteiro, novo_inteiro(5));
+    inserir_item(lista_inteiro, novo_inteiro(4));
+    inserir_item(lista_inteiro, novo_inteiro(2));
     imprimir_lista(lista_inteiro);
 
     printf("\nBuscando item que está na lista:\n");
@@ -36,6 +36,15 @@ int main()
     printf("\nBuscando item que não está na lista:\n");
     numero_teste->valor = 6;
     printf("Posição: %d\n", posicao_item(lista_inteiro, numero_teste));
+
+    printf("\nOrdenando lista:\n");
+    ordenar_lista(lista_inteiro);
+    imprimir_lista(lista_inteiro);
+
+    printf("\nRemovendo item:\n");
+    int dado_remover = 2;
+    remover_item_por_dados(lista_inteiro, &dado_remover);
+    imprimir_lista(lista_inteiro);
 
     excluir_lista(lista_inteiro);
     liberar_inteiro(numero_teste);

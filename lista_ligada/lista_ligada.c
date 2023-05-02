@@ -12,8 +12,9 @@ typedef struct
 {
     int tamanho;
     Item *primeiro_item;
-    void (*liberar_dados_item)(void *);
-    int (*comparar_dados_itens)(void *, void *);
+    void (*liberar_dados)(void *);
+    int (*comparar_dados)(void *, void *);
+    void (*alterar_dados)(void *, void *);
     void (*imprimir_item)(void *);
 } Lista;
 
@@ -24,14 +25,67 @@ Item *novo_item(void *dados)
     item->proximo = NULL;
 }
 
+void alterar_dados_item(Lista *lista, void *dados_antigos, void *dados_novos)
+{
+    if (lista == NULL || dados_antigos == NULL || dados_novos == NULL)
+        return;
+    
+    Item *item = lista->primeiro_item;
+    while(item != NULL)
+    {
+        if (lista->comparar_dados(item->dados, dados_antigos) == 0)
+        {
+            lista->alterar_dados(item, dados_novos);
+            return;
+        }
+    }
+}
+
 void excluir_item(Item *item)
 {
     free(item);
 }
 
+void remover_item(Lista *lista, Item *item)
+{
+    lista->liberar_dados(item->dados);
+    excluir_item(item);
+}
+
+void remover_item_por_dados(Lista *lista, void *dados)
+{
+    if (lista == NULL || dados == NULL || lista->primeiro_item == NULL)
+        return;
+    
+    Item *anterior = lista->primeiro_item;
+
+    if (lista->comparar_dados(anterior->dados, dados) == 0)
+    {
+        lista->primeiro_item = anterior->proximo;
+
+        remover_item(lista, anterior);
+        return;
+    }
+
+    Item *atual = anterior->proximo;
+    while(atual != NULL)
+    {
+        if (lista->comparar_dados(atual->dados, dados) == 0)
+        {
+            anterior->proximo = atual->proximo;
+            remover_item(lista, atual);
+            return;
+        }
+
+        anterior = atual;
+        atual = atual->proximo;
+    }
+}
+
 Lista *nova_lista(
-    void (*liberar_dados_item)(void *),
-    int (*comparar_dados_itens)(void *, void *),
+    void (*liberar_dados)(void *),
+    int (*comparar_dados)(void *, void *),
+    void (*alterar_dados)(void *, void *),
     void (*imprimir_item)(void *))
 {
     Lista *lista = (Lista *)malloc(sizeof(Lista));
@@ -39,8 +93,9 @@ Lista *nova_lista(
     lista->tamanho = 0;
     lista->primeiro_item = NULL;
     
-    lista->liberar_dados_item = liberar_dados_item;
-    lista->comparar_dados_itens = comparar_dados_itens;
+    lista->liberar_dados = liberar_dados;
+    lista->comparar_dados = comparar_dados;
+    lista->alterar_dados = alterar_dados;
     lista->imprimir_item = imprimir_item;
 
     return lista;
@@ -48,14 +103,17 @@ Lista *nova_lista(
 
 void limpar_lista(Lista *lista)
 {
+    if (lista == NULL)
+        return;
+    
     while (lista->primeiro_item != NULL)
     {
         Item *item = lista->primeiro_item;
 
         lista->primeiro_item = item->proximo;
-        lista->liberar_dados_item(item->dados);
+        lista->liberar_dados(item->dados);
 
-        free(item);
+        excluir_item(item);
         item = lista->primeiro_item;
     }
 
@@ -64,12 +122,18 @@ void limpar_lista(Lista *lista)
 
 void excluir_lista(Lista *lista)
 {
+    if (lista == NULL)
+        return;
+    
     limpar_lista(lista);
     free(lista);
 }
 
 Item *ultimo_item(Lista *lista)
 {
+    if (lista == NULL)
+        return NULL;
+    
     Item *item = lista->primeiro_item;
     while (item->proximo != NULL)
     {
@@ -79,8 +143,13 @@ Item *ultimo_item(Lista *lista)
     return item;
 }
 
-void inserir_item(Lista *lista, Item *item)
+void inserir_item(Lista *lista, void *dados)
 {
+    if (lista == NULL || dados == NULL)
+        return;
+
+    Item *item = novo_item(dados);
+    
     if (lista->primeiro_item == NULL)
         lista->primeiro_item = item;
     else
@@ -91,12 +160,15 @@ void inserir_item(Lista *lista, Item *item)
 
 int posicao_item(Lista *lista, void *dados)
 {
+    if (lista == NULL || dados == NULL)
+        return -1;
+    
     int posicao = -1;
     int posicao_atual = 0;
     Item *item = lista->primeiro_item;
     while (item != NULL)
     {
-        if (lista->comparar_dados_itens(item->dados, dados) == 0)
+        if (lista->comparar_dados(item->dados, dados) == 0)
         {
             posicao = posicao_atual;
             break;
@@ -111,6 +183,12 @@ int posicao_item(Lista *lista, void *dados)
 
 void imprimir_lista(Lista *lista)
 {
+    if (lista == NULL)
+    {
+        printf("Lista nula\n");
+        return;
+    }
+
     printf("- IMPRIMINDO LISTA -\n");
     printf("Tamanho: %d\n", lista->tamanho);
 
@@ -144,4 +222,44 @@ void inverter_lista(Lista *lista)
     Item *primeiro_item = lista->primeiro_item;
     lista->primeiro_item = ultimo_item(lista);
     inverter_itens(primeiro_item, NULL);
+}
+
+void trocar_itens(Item *item1, Item *item2)
+{
+    if (item1 == NULL || item2 == NULL)
+        return;
+    
+    void *troca = item1->dados;
+    item1->dados = item2->dados;
+    item2->dados = troca;
+}
+
+void ordenar_lista(Lista *lista)
+{
+    if (lista == NULL || lista->primeiro_item == NULL || lista->primeiro_item->proximo == NULL)
+        return;
+    
+    Item *atual = NULL;
+    int ordenada = 0;
+    int limite = lista->tamanho - 1;
+    int comparacoes = 0;
+    while(ordenada == 0)
+    {
+        ordenada = 1;
+        atual = lista->primeiro_item;
+        while(atual->proximo != NULL && comparacoes <= limite)
+        {
+            if (lista->comparar_dados(atual->dados, atual->proximo->dados) > 0)
+            {
+                trocar_itens(atual, atual->proximo);
+                ordenada = 0;
+            }
+
+            atual = atual->proximo;
+            comparacoes++;
+        }
+
+        limite--;
+        comparacoes = 0;
+    }
 }

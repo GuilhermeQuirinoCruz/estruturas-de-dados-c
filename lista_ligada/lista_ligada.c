@@ -35,9 +35,11 @@ void alterar_dados_item(Lista *lista, void *dados_antigos, void *dados_novos)
     {
         if (lista->comparar_dados(item->dados, dados_antigos) == 0)
         {
-            lista->alterar_dados(item, dados_novos);
+            lista->alterar_dados(item->dados, dados_novos);
             return;
         }
+
+        item = item->proximo;
     }
 }
 

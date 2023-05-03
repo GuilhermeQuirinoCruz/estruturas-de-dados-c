@@ -2,6 +2,7 @@
 #include <locale.h>
 #include "lista_ligada.c"
 #include "../tipos/inteiro.c"
+#include <string.h>
 
 int main()
 {
@@ -31,7 +32,7 @@ int main()
     imprimir_lista(lista_inteiro);
 
     printf("\nBuscando item que está na lista:\n");
-    Numero *numero_teste = novo_inteiro(3);
+    NumeroInteiro *numero_teste = novo_inteiro(3);
     printf("Posição: %d\n", posicao_item(lista_inteiro, numero_teste));
 
     printf("\nBuscando item que não está na lista:\n");
@@ -45,6 +46,12 @@ int main()
     int dado_remover = 3;
     printf("\nRemovendo item [%d]:\n", dado_remover);
     remover_item_lista(lista_inteiro, &dado_remover);
+    imprimir_lista(lista_inteiro);
+
+    int alterar1 = 5;
+    int alterar2 = 6;
+    printf("\nAlterando item [%d] para [%d]:\n", alterar1, alterar2);
+    alterar_dados_item(lista_inteiro, &alterar1, &alterar2);
     imprimir_lista(lista_inteiro);
 
     excluir_lista(lista_inteiro);

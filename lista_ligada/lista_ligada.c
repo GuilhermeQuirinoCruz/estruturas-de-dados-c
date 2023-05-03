@@ -52,34 +52,28 @@ void remover_item(Lista *lista, Item *item)
     excluir_item(item);
 }
 
-void remover_item_por_dados(Lista *lista, void *dados)
+Item *remover_item_por_dados(Lista *lista, Item *item, void *dados)
 {
-    if (lista == NULL || dados == NULL || lista->primeiro_item == NULL)
+    if (item == NULL || dados == NULL)
+        return NULL;
+    
+    if (lista->comparar_dados(item->dados, dados) == 0)
+    {
+        Item *proximo = item->proximo;
+        remover_item(lista, item);
+        return proximo;
+    }
+
+    item->proximo = remover_item_por_dados(lista, item->proximo, dados);
+    return item;
+}
+
+void remover_item_lista(Lista *lista, void *dados)
+{
+    if (lista == NULL || dados == NULL)
         return;
     
-    Item *anterior = lista->primeiro_item;
-
-    if (lista->comparar_dados(anterior->dados, dados) == 0)
-    {
-        lista->primeiro_item = anterior->proximo;
-
-        remover_item(lista, anterior);
-        return;
-    }
-
-    Item *atual = anterior->proximo;
-    while(atual != NULL)
-    {
-        if (lista->comparar_dados(atual->dados, dados) == 0)
-        {
-            anterior->proximo = atual->proximo;
-            remover_item(lista, atual);
-            return;
-        }
-
-        anterior = atual;
-        atual = atual->proximo;
-    }
+    lista->primeiro_item = remover_item_por_dados(lista, lista->primeiro_item, dados);
 }
 
 Lista *nova_lista(

@@ -42,8 +42,8 @@ int main()
     imprimir_lista(lista_inteiro);
 
     printf("\nRemovendo item:\n");
-    int dado_remover = 2;
-    remover_item_por_dados(lista_inteiro, &dado_remover);
+    int dado_remover = 0;
+    remover_item_lista(lista_inteiro, &dado_remover);
     imprimir_lista(lista_inteiro);
 
     excluir_lista(lista_inteiro);

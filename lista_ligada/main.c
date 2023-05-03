@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <locale.h>
-#include "lista_inteiro.c"
+#include "lista_ligada.c"
+#include "../tipos/inteiro.c"
 
 int main()
 {
     setlocale(LC_ALL, "");
 
     printf("Criando nova lista:\n");
-    Lista *lista_inteiro = nova_lista_inteiro();
+    Lista *lista_inteiro = nova_lista(liberar_inteiro, comparar_inteiros, alterar_inteiro, imprimir_inteiro);
     inserir_item(lista_inteiro, novo_inteiro(10));
     inserir_item(lista_inteiro, novo_inteiro(20));
     inserir_item(lista_inteiro, novo_inteiro(30));
@@ -41,8 +42,8 @@ int main()
     ordenar_lista(lista_inteiro);
     imprimir_lista(lista_inteiro);
 
-    printf("\nRemovendo item:\n");
     int dado_remover = 3;
+    printf("\nRemovendo item [%d]:\n", dado_remover);
     remover_item_lista(lista_inteiro, &dado_remover);
     imprimir_lista(lista_inteiro);
 

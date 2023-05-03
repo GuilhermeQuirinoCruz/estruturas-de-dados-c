@@ -1,4 +1,5 @@
-#include "lista_ligada.c"
+#include <stdlib.h>
+#include <stdio.h>
 
 typedef struct
 {
@@ -39,7 +40,7 @@ void imprimir_inteiro(void *inteiro)
     printf("%d", numero->valor);
 }
 
-Lista *nova_lista_inteiro()
+void funcao_nova()
 {
-    Lista *lista = nova_lista(liberar_inteiro, comparar_inteiros, alterar_inteiro, imprimir_inteiro);
+    printf("oi");
 }

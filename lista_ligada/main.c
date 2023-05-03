@@ -42,7 +42,7 @@ int main()
     imprimir_lista(lista_inteiro);
 
     printf("\nRemovendo item:\n");
-    int dado_remover = 0;
+    int dado_remover = 3;
     remover_item_lista(lista_inteiro, &dado_remover);
     imprimir_lista(lista_inteiro);
 

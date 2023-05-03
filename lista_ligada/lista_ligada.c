@@ -49,6 +49,7 @@ void excluir_item(Item *item)
 void remover_item(Lista *lista, Item *item)
 {
     lista->liberar_dados(item->dados);
+    lista->tamanho--;
     excluir_item(item);
 }
 
@@ -103,15 +104,11 @@ void limpar_lista(Lista *lista)
     while (lista->primeiro_item != NULL)
     {
         Item *item = lista->primeiro_item;
-
         lista->primeiro_item = item->proximo;
-        lista->liberar_dados(item->dados);
 
-        excluir_item(item);
+        remover_item(lista, item);
         item = lista->primeiro_item;
     }
-
-    lista->tamanho = 0;
 }
 
 void excluir_lista(Lista *lista)

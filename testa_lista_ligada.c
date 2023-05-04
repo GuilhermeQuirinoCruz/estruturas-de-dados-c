@@ -1,13 +1,11 @@
 #include <stdio.h>
 #include <locale.h>
-#include "lista_ligada.c"
-#include "../tipos/inteiro.c"
+#include "lista_ligada/lista_ligada.c"
+#include "tipos/inteiro.c"
 #include <string.h>
 
-int main()
+void testa_lista_inteiros()
 {
-    setlocale(LC_ALL, "");
-
     printf("Criando nova lista:\n");
     Lista *lista_inteiro = nova_lista(liberar_inteiro, comparar_inteiros, alterar_inteiro, imprimir_inteiro);
     inserir_item(lista_inteiro, novo_inteiro(10));
@@ -56,6 +54,13 @@ int main()
 
     excluir_lista(lista_inteiro);
     liberar_inteiro(numero_teste);
+}
+
+int main()
+{
+    setlocale(LC_ALL, "");
+
+    testa_lista_inteiros();
 
     return 0;
 }

@@ -1,8 +1,9 @@
 #include <stdio.h>
-#include <locale.h>
+#include <windows.h>
 #include "lista_ligada/lista_ligada.c"
 #include "tipos/inteiro.c"
-#include <string.h>
+#include "tipos/string.c"
+// #include <string.h>
 
 void testa_lista_inteiros()
 {
@@ -46,21 +47,68 @@ void testa_lista_inteiros()
     remover_item_lista(lista_inteiro, &dado_remover);
     imprimir_lista(lista_inteiro);
 
-    int alterar1 = 5;
-    int alterar2 = 6;
-    printf("\nAlterando item [%d] para [%d]:\n", alterar1, alterar2);
-    alterar_dados_item(lista_inteiro, &alterar1, &alterar2);
+    int antigo = 5;
+    int novo = 6;
+    printf("\nAlterando item [%d] para [%d]:\n", antigo, novo);
+    alterar_dados_item(lista_inteiro, &antigo, &novo);
     imprimir_lista(lista_inteiro);
 
     excluir_lista(lista_inteiro);
     liberar_inteiro(numero_teste);
 }
 
+void testa_lista_strings()
+{
+    printf("Criando nova lista:\n");
+    Lista *lista_strings = nova_lista(liberar_string, comparar_strings, alterar_string, imprimir_string);
+
+    inserir_item(lista_strings, nova_string("string"));
+    inserir_item(lista_strings, nova_string("string na posição 2"));
+    inserir_item(lista_strings, nova_string("string teste"));
+    
+    imprimir_lista(lista_strings);
+
+    String *string_teste = nova_string("string");
+    printf("\nPosição do item [%s]: %d\n", string_teste->valor, posicao_item(lista_strings, string_teste));
+
+    String *string_alterar = nova_string("string");
+    printf("\nAlterando [%s]:\n", string_alterar->valor);
+    alterar_dados_item(lista_strings, string_alterar, "string alterada");
+
+    imprimir_lista(lista_strings);
+
+    printf("\nLimpando lista:\n");
+    limpar_lista(lista_strings);
+    imprimir_lista(lista_strings);
+
+    printf("\nInserindo itens aleatórios:\n");
+    inserir_item(lista_strings, nova_string("Sopa"));
+    inserir_item(lista_strings, nova_string("Orelha"));
+    inserir_item(lista_strings, nova_string("Problemas"));
+    inserir_item(lista_strings, nova_string("Xícara"));
+    inserir_item(lista_strings, nova_string("Estabelecimento"));
+    inserir_item(lista_strings, nova_string("Pessoa"));
+    inserir_item(lista_strings, nova_string("Juventude"));
+    inserir_item(lista_strings, nova_string("Problema"));
+    inserir_item(lista_strings, nova_string("Aspiração"));
+
+    imprimir_lista(lista_strings);
+
+    printf("\nOrdenando lista:\n");
+    ordenar_lista(lista_strings);
+    imprimir_lista(lista_strings);
+
+    liberar_string(string_teste);
+    liberar_string(string_alterar);
+    excluir_lista(lista_strings);
+}
+
 int main()
 {
-    setlocale(LC_ALL, "");
+    SetConsoleOutputCP(65001);
 
-    testa_lista_inteiros();
+    // testa_lista_inteiros();
+    testa_lista_strings();
 
     return 0;
 }

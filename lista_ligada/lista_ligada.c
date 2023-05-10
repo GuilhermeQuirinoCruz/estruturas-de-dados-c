@@ -209,7 +209,7 @@ void inverter_itens(Item *atual, Item *proximo)
 
 void inverter_lista(Lista *lista)
 {
-    if (lista->primeiro_item == NULL)
+    if (lista == NULL)
         return;
 
     Item *primeiro_item = lista->primeiro_item;

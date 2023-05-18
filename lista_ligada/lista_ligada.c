@@ -174,6 +174,24 @@ int posicao_item(Lista *lista, void *dados)
     return posicao;
 }
 
+Item *item_na_posicao(Lista *lista, int posicao)
+{
+    if (lista == NULL)
+        return NULL;
+    
+    if (posicao >= lista->tamanho || posicao < 0)
+        return NULL;
+
+    Item *item = lista->primeiro_item;
+    while(posicao > 0)
+    {
+        posicao--;
+        item = item->proximo;
+    }
+
+    return item;
+}
+
 void imprimir_lista(Lista *lista)
 {
     if (lista == NULL)

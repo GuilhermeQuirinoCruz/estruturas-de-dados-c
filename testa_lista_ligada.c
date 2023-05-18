@@ -38,6 +38,14 @@ void testa_lista_inteiros()
     numero_teste->valor = 6;
     printf("Posição: %d\n", posicao_item(lista_inteiro, numero_teste));
 
+    printf("\nBuscando item na posição 0: ");
+    lista_inteiro->imprimir_item(item_na_posicao(lista_inteiro, 0)->dados);
+    printf("\n");
+
+    printf("\nBuscando item na posição 4: ");
+    lista_inteiro->imprimir_item(item_na_posicao(lista_inteiro, 4)->dados);
+    printf("\n");
+
     printf("\nOrdenando lista:\n");
     ordenar_lista(lista_inteiro);
     imprimir_lista(lista_inteiro);
@@ -107,8 +115,8 @@ int main()
 {
     SetConsoleOutputCP(65001);
 
-    // testa_lista_inteiros();
-    testa_lista_strings();
+    testa_lista_inteiros();
+    // testa_lista_strings();
 
     return 0;
 }

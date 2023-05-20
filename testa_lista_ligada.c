@@ -8,10 +8,14 @@
 void testa_lista_inteiros()
 {
     printf("Criando nova lista:\n");
-    Lista *lista_inteiro = nova_lista(liberar_inteiro, comparar_inteiros, alterar_inteiro, imprimir_inteiro);
-    inserir_item(lista_inteiro, novo_inteiro(10));
-    inserir_item(lista_inteiro, novo_inteiro(20));
-    inserir_item(lista_inteiro, novo_inteiro(30));
+    Lista *lista_inteiro = nova_lista(liberar_inteiro, comparar_inteiros, alterar_inteiro, imprimir_inteiro, novo_inteiro);
+    int aux;
+    aux = 10;
+    inserir_item(lista_inteiro, &aux);
+    aux = 20;
+    inserir_item(lista_inteiro, &aux);
+    aux = 30;
+    inserir_item(lista_inteiro, &aux);
     imprimir_lista(lista_inteiro);
 
     printf("\nInvertendo:\n");
@@ -23,15 +27,21 @@ void testa_lista_inteiros()
     imprimir_lista(lista_inteiro);
 
     printf("\nInserindo novos itens:\n");
-    inserir_item(lista_inteiro, novo_inteiro(1));
-    inserir_item(lista_inteiro, novo_inteiro(3));
-    inserir_item(lista_inteiro, novo_inteiro(5));
-    inserir_item(lista_inteiro, novo_inteiro(4));
-    inserir_item(lista_inteiro, novo_inteiro(2));
+    aux = 1;
+    inserir_item(lista_inteiro, &aux);
+    aux = 3;
+    inserir_item(lista_inteiro, &aux);
+    aux = 5;
+    inserir_item(lista_inteiro, &aux);
+    aux = 4;
+    inserir_item(lista_inteiro, &aux);
+    aux = 2;
+    inserir_item(lista_inteiro, &aux);
     imprimir_lista(lista_inteiro);
 
     printf("\nBuscando item que está na lista:\n");
-    NumeroInteiro *numero_teste = novo_inteiro(3);
+    aux = 3;
+    NumeroInteiro *numero_teste = novo_inteiro(&aux);
     printf("Posição: %d\n", posicao_item(lista_inteiro, numero_teste));
 
     printf("\nBuscando item que não está na lista:\n");
@@ -61,18 +71,26 @@ void testa_lista_inteiros()
     alterar_dados_item(lista_inteiro, &antigo, &novo);
     imprimir_lista(lista_inteiro);
 
+    printf("\nClonando lista:\n");
+    Lista *lista_inteiro_clone = clonar_lista(lista_inteiro);
+    imprimir_lista(lista_inteiro_clone);
+
     excluir_lista(lista_inteiro);
+    excluir_lista(lista_inteiro_clone);
     liberar_inteiro(numero_teste);
 }
 
 void testa_lista_strings()
 {
     printf("Criando nova lista:\n");
-    Lista *lista_strings = nova_lista(liberar_string, comparar_strings, alterar_string, imprimir_string);
+    Lista *lista_strings = nova_lista(liberar_string, comparar_strings, alterar_string, imprimir_string, nova_string);
 
-    inserir_item(lista_strings, nova_string("string"));
-    inserir_item(lista_strings, nova_string("string na posição 2"));
-    inserir_item(lista_strings, nova_string("string teste"));
+    // inserir_item(lista_strings, nova_string("string"));
+    // inserir_item(lista_strings, nova_string("string na posição 2"));
+    // inserir_item(lista_strings, nova_string("string teste"));
+    inserir_item(lista_strings, "string");
+    inserir_item(lista_strings, "string na posição 2");
+    inserir_item(lista_strings, "string teste");
     
     imprimir_lista(lista_strings);
 
@@ -90,15 +108,15 @@ void testa_lista_strings()
     imprimir_lista(lista_strings);
 
     printf("\nInserindo itens aleatórios:\n");
-    inserir_item(lista_strings, nova_string("Sopa"));
-    inserir_item(lista_strings, nova_string("Orelha"));
-    inserir_item(lista_strings, nova_string("Problemas"));
-    inserir_item(lista_strings, nova_string("Xícara"));
-    inserir_item(lista_strings, nova_string("Estabelecimento"));
-    inserir_item(lista_strings, nova_string("Pessoa"));
-    inserir_item(lista_strings, nova_string("Juventude"));
-    inserir_item(lista_strings, nova_string("Problema"));
-    inserir_item(lista_strings, nova_string("Aspiração"));
+    inserir_item(lista_strings, "Sopa");
+    inserir_item(lista_strings, "Orelha");
+    inserir_item(lista_strings, "Problemas");
+    inserir_item(lista_strings, "Xícara");
+    inserir_item(lista_strings, "Estabelecimento");
+    inserir_item(lista_strings, "Pessoa");
+    inserir_item(lista_strings, "Juventude");
+    inserir_item(lista_strings, "Problema");
+    inserir_item(lista_strings, "Aspiração");
 
     imprimir_lista(lista_strings);
 

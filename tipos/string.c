@@ -7,10 +7,10 @@ typedef struct
     char *valor;
 } String;
 
-String *nova_string(char *valor)
+void *nova_string(void *valor)
 {
     String *string = (String *) malloc(sizeof(String));
-    string->valor = strdup(valor);
+    string->valor = strdup((char *)valor);
 
     return string;
 }

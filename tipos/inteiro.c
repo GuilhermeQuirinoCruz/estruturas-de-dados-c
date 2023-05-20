@@ -6,10 +6,10 @@ typedef struct
     int valor;
 } NumeroInteiro;
 
-NumeroInteiro *novo_inteiro(int valor)
+void *novo_inteiro(void *valor)
 {
-    NumeroInteiro *numero = (NumeroInteiro *) malloc(sizeof(NumeroInteiro));
-    numero->valor = valor;
+    NumeroInteiro *numero = (NumeroInteiro *)malloc(sizeof(NumeroInteiro));
+    numero->valor = *((int *)valor);
 
     return numero;
 }
@@ -25,7 +25,9 @@ int comparar_inteiros(void *inteiro1, void *inteiro2)
     NumeroInteiro *numero1 = (NumeroInteiro *)inteiro1;
     NumeroInteiro *numero2 = (NumeroInteiro *)inteiro2;
 
-    return(numero1->valor - numero2->valor);
+    int diferenca = numero1->valor - numero2->valor;
+
+    return ((diferenca > 0) - (diferenca < 0));
 }
 
 void alterar_inteiro(void *inteiro, void *dados)

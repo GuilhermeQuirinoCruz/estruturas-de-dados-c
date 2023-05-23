@@ -1,23 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-struct _item
-{
-    void *dados;
-    struct _item *proximo;
-};
-typedef struct _item ItemLista;
-
-typedef struct
-{
-    int tamanho;
-    ItemLista *primeiro_item;
-    void (*liberar_dados)(void *);
-    int (*comparar_dados)(void *, void *);
-    void (*alterar_dados)(void *, void *);
-    void (*imprimir_item)(void *);
-    void *(*inserir_dados)(void *);
-} Lista;
+#include "lista_ligada.h"
 
 ItemLista *lista_novo_item(void *dados)
 {

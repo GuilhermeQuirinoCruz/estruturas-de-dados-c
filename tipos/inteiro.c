@@ -1,10 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-
-typedef struct
-{
-    int valor;
-} NumeroInteiro;
+#include "inteiro.h"
 
 void *novo_inteiro(void *valor)
 {

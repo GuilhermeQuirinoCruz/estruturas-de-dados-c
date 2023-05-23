@@ -1,11 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-typedef struct
-{
-    char *valor;
-} String;
+#include "string.h"
 
 void *nova_string(void *valor)
 {

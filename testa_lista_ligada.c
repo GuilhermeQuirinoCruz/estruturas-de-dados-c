@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <windows.h>
-#include "lista_ligada/lista_ligada.c"
-#include "tipos/inteiro.c"
-#include "tipos/string.c"
-// #include <string.h>
+#include "lista_ligada/lista_ligada.h"
+#include "tipos/inteiro.h"
+#include "tipos/string.h"
 
 void testa_lista_inteiros()
 {
+    printf("\n- Testando lista de inteiros -\n");
     printf("Criando nova lista:\n");
     Lista *lista_inteiro = nova_lista(liberar_inteiro, comparar_inteiros, alterar_inteiro, imprimir_inteiro, novo_inteiro);
     int aux;
@@ -82,12 +82,10 @@ void testa_lista_inteiros()
 
 void testa_lista_strings()
 {
+    printf("\n- Testando lista de strings -\n");
     printf("Criando nova lista:\n");
     Lista *lista_strings = nova_lista(liberar_string, comparar_strings, alterar_string, imprimir_string, nova_string);
 
-    // lista_inserir_item(lista_strings, nova_string("string"));
-    // lista_inserir_item(lista_strings, nova_string("string na posição 2"));
-    // lista_inserir_item(lista_strings, nova_string("string teste"));
     lista_inserir_item(lista_strings, "string");
     lista_inserir_item(lista_strings, "string na posição 2");
     lista_inserir_item(lista_strings, "string teste");
@@ -134,7 +132,7 @@ int main()
     SetConsoleOutputCP(65001);
 
     testa_lista_inteiros();
-    // testa_lista_strings();
+    testa_lista_strings();
 
     return 0;
 }

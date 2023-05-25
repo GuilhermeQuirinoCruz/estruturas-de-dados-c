@@ -113,7 +113,7 @@ void copiar_itens_pilha(Pilha *pilha, Pilha *copia)
     ItemPilha *item = pilha->topo;
     while (item != NULL)
     {
-        push_pilha_item(copia, novo_item_pilha(pilha->inserir_dados(item->dados)));
+        push_pilha(copia, item->dados);
         item = item->anterior;
     }
 

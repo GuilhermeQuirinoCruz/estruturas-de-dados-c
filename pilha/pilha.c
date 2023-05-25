@@ -129,25 +129,39 @@ Pilha *clonar_pilha(Pilha *pilha)
 
 void ordenar_pilha(Pilha *pilha)
 {
-    Pilha *pilha_aux = nova_pilha(pilha->liberar_dados, pilha->comparar_dados, pilha->alterar_dados, pilha->imprimir_item, pilha->inserir_dados);
+    Pilha *pilha_ordenada = nova_pilha(pilha->liberar_dados, pilha->comparar_dados, pilha->alterar_dados, pilha->imprimir_item, pilha->inserir_dados);
     ItemPilha *item;
     ItemPilha *item_aux;
 
     while (pilha->tamanho > 0)
     {
         item = pop_pilha(pilha);
-        item_aux = pilha_aux->topo;
+        item_aux = pilha_ordenada->topo;
         while (item_aux != NULL && pilha->comparar_dados(item->dados, item_aux->dados) < 0)
         {
-            push_pilha_item(pilha, pop_pilha(pilha_aux));
-            item_aux = pilha_aux->topo;
+            push_pilha_item(pilha, pop_pilha(pilha_ordenada));
+            item_aux = pilha_ordenada->topo;
         }
 
-        push_pilha_item(pilha_aux, item);
+        push_pilha_item(pilha_ordenada, item);
     }
 
-    copiar_itens_pilha(pilha_aux, pilha);
-    excluir_pilha(pilha_aux);
+    copiar_itens_pilha(pilha_ordenada, pilha);
+    excluir_pilha(pilha_ordenada);
+}
+
+int pilha_contem(Pilha *pilha, void *dados)
+{
+    ItemPilha *item = pilha->topo;
+    while (item != NULL)
+    {
+        if (pilha->comparar_dados(item->dados, dados) == 0)
+            return 1;
+        
+        item = item->anterior;
+    }
+
+    return 0;
 }
 
 void imprimir_pilha(Pilha *pilha)

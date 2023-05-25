@@ -40,4 +40,5 @@ void inverter_pilha(Pilha *pilha);
 void copiar_itens_pilha(Pilha *pilha, Pilha *copia);
 Pilha *clonar_pilha(Pilha *pilha);
 void ordenar_pilha(Pilha *pilha);
+int pilha_contem(Pilha *pilha, void *dados);
 void imprimir_pilha(Pilha *pilha);

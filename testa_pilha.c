@@ -56,6 +56,14 @@ void testa_pilha_inteiros()
     ordenar_pilha(pilha_inteiro);
     imprimir_pilha(pilha_inteiro);
 
+    printf("\nBuscando item que está na lista:\n");
+    aux = 4;
+    printf("%d\n", pilha_contem(pilha_inteiro, &aux));
+    
+    printf("\nBuscando item que não está na lista:\n");
+    aux = 11;
+    printf("%d\n", pilha_contem(pilha_inteiro, &aux));
+
     limpar_pilha(pilha_inteiro);
 }
 

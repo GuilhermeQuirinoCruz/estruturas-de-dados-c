@@ -1,10 +1,5 @@
 #pragma once
 
-typedef struct
-{
-    char *valor;
-} String;
-
 void *string_nova(void *valor);
 void string_liberar(void *string);
 int string_comparar(void *string1, void *string2);

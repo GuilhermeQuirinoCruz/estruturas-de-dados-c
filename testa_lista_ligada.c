@@ -42,12 +42,11 @@ void testa_lista_inteiros()
 
     printf("\nBuscando item que está na lista:\n");
     aux = 3;
-    NumeroInteiro *numero_teste = inteiro_novo(&aux);
-    printf("Posição: %d\n", lista_item_posicao(lista_inteiro, numero_teste));
+    printf("Posição: %d\n", lista_item_posicao(lista_inteiro, &aux));
 
     printf("\nBuscando item que não está na lista:\n");
-    numero_teste->valor = 6;
-    printf("Posição: %d\n", lista_item_posicao(lista_inteiro, numero_teste));
+    aux = 6;
+    printf("Posição: %d\n", lista_item_posicao(lista_inteiro, &aux));
 
     printf("\nBuscando item na posição 0: ");
     lista_inteiro->imprimir_dados(lista_item_na_posicao(lista_inteiro, 0)->dados);
@@ -79,7 +78,6 @@ void testa_lista_inteiros()
 
     lista_excluir(lista_inteiro);
     lista_excluir(lista_inteiro_clone);
-    inteiro_liberar(numero_teste);
 }
 
 void testa_lista_strings()
@@ -94,11 +92,11 @@ void testa_lista_strings()
     
     lista_imprimir(lista_strings);
 
-    String *string_teste = string_nova("string");
-    printf("\nPosição do item [%s]: %d\n", string_teste->valor, lista_item_posicao(lista_strings, string_teste));
+    char *string_teste = string_nova("string na posição 2");
+    printf("\nPosição do item [%s]: %d\n", string_teste, lista_item_posicao(lista_strings, string_teste));
 
-    String *string_alterar = string_nova("string");
-    printf("\nAlterando [%s]:\n", string_alterar->valor);
+    char *string_alterar = string_nova("string");
+    printf("\nAlterando [%s]:\n", string_alterar);
     lista_item_alterar_dados(lista_strings, string_alterar, "string alterada");
 
     lista_imprimir(lista_strings);
@@ -134,7 +132,7 @@ int main()
     // gcc -o testa_lista_ligada.exe testa_lista_ligada.c lista_ligada/lista_ligada.c tipos/inteiro.c tipos/string.c
     SetConsoleOutputCP(65001);
 
-    testa_lista_inteiros();
+    // testa_lista_inteiros();
     testa_lista_strings();
 
     return 0;

@@ -7,54 +7,54 @@ void testa_pilha_inteiros()
 {
     printf("\n- Testando pilha de inteiros -\n");
     printf("Criando nova pilha:\n");
-    Pilha *pilha_inteiro = nova_pilha(liberar_inteiro, comparar_inteiros, alterar_inteiro, imprimir_inteiro, novo_inteiro);
+    Pilha *pilha_inteiro = pilha_criar(inteiro_liberar, inteiro_comparar, inteiro_alterar, imprimir_inteiro, inteiro_novo);
 
     int aux;
     aux = 10;
-    push_pilha(pilha_inteiro, &aux);
+    pilha_push(pilha_inteiro, &aux);
     aux = 20;
-    push_pilha(pilha_inteiro, &aux);
+    pilha_push(pilha_inteiro, &aux);
     aux = 30;
-    push_pilha(pilha_inteiro, &aux);
-    imprimir_pilha(pilha_inteiro);
+    pilha_push(pilha_inteiro, &aux);
+    pilha_imprimir(pilha_inteiro);
 
     printf("\nPop:\n");
     printf("Item removido: ");
-    ItemPilha *item = pop_pilha(pilha_inteiro);
-    pilha_inteiro->imprimir_item(item->dados);
+    PilhaItem *item = pilha_pop(pilha_inteiro);
+    pilha_inteiro->imprimir_dados(item->dados);
     printf("\n");
-    imprimir_pilha(pilha_inteiro);
+    pilha_imprimir(pilha_inteiro);
 
     printf("\nPush:\n");
-    push_pilha_item(pilha_inteiro, item);
-    imprimir_pilha(pilha_inteiro);
+    pilha_push_item(pilha_inteiro, item);
+    pilha_imprimir(pilha_inteiro);
 
     printf("\nLimpando:\n");
-    limpar_pilha(pilha_inteiro);
-    imprimir_pilha(pilha_inteiro);
+    pilha_limpar(pilha_inteiro);
+    pilha_imprimir(pilha_inteiro);
 
     printf("\nInserindo novos itens:\n");
     aux = 5;
-    push_pilha(pilha_inteiro, &aux);
+    pilha_push(pilha_inteiro, &aux);
     aux = 8;
-    push_pilha(pilha_inteiro, &aux);
+    pilha_push(pilha_inteiro, &aux);
     aux = 2;
-    push_pilha(pilha_inteiro, &aux);
+    pilha_push(pilha_inteiro, &aux);
     aux = 1;
-    push_pilha(pilha_inteiro, &aux);
+    pilha_push(pilha_inteiro, &aux);
     aux = 10;
-    push_pilha(pilha_inteiro, &aux);
+    pilha_push(pilha_inteiro, &aux);
     aux = 4;
-    push_pilha(pilha_inteiro, &aux);
-    imprimir_pilha(pilha_inteiro);
+    pilha_push(pilha_inteiro, &aux);
+    pilha_imprimir(pilha_inteiro);
 
     printf("\nInvertendo pilha:\n");
-    inverter_pilha(pilha_inteiro);
-    imprimir_pilha(pilha_inteiro);
+    pilha_inverter(pilha_inteiro);
+    pilha_imprimir(pilha_inteiro);
 
     printf("\nOrdenando:\n");
-    ordenar_pilha(pilha_inteiro);
-    imprimir_pilha(pilha_inteiro);
+    pilha_ordenar(pilha_inteiro);
+    pilha_imprimir(pilha_inteiro);
 
     printf("\nBuscando item que está na lista:\n");
     aux = 4;
@@ -64,7 +64,7 @@ void testa_pilha_inteiros()
     aux = 11;
     printf("%d\n", pilha_contem(pilha_inteiro, &aux));
 
-    limpar_pilha(pilha_inteiro);
+    pilha_limpar(pilha_inteiro);
 }
 
 int main()

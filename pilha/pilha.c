@@ -2,29 +2,29 @@
 #include <stdlib.h>
 #include "pilha.h"
 
-ItemPilha *novo_item_pilha(void *dados)
+PilhaItem *pilha_item_novo(void *dados)
 {
-    ItemPilha *item = (ItemPilha *)malloc(sizeof(ItemPilha));
+    PilhaItem *item = (PilhaItem *)malloc(sizeof(PilhaItem));
     item->dados = dados;
     item->anterior = NULL;
 }
 
-void excluir_item_pilha(ItemPilha *item)
+void pilha_item_excluir(PilhaItem *item)
 {
     free(item);
 }
 
-void remover_item_pilha(Pilha *pilha, ItemPilha *item)
+void pilha_item_remover(Pilha *pilha, PilhaItem *item)
 {
     pilha->liberar_dados(item->dados);
-    excluir_item_pilha(item);
+    pilha_item_excluir(item);
 }
 
-Pilha *nova_pilha(
+Pilha *pilha_criar(
     void (*liberar_dados)(void *),
     int (*comparar_dados)(void *, void *),
     void (*alterar_dados)(void *, void *),
-    void (*imprimir_item)(void *),
+    void (*imprimir_dados)(void *),
     void *(*inserir_dados)(void *))
 {
     Pilha *pilha = (Pilha *)malloc(sizeof(Pilha));
@@ -35,13 +35,13 @@ Pilha *nova_pilha(
     pilha->liberar_dados = liberar_dados;
     pilha->comparar_dados = comparar_dados;
     pilha->alterar_dados = alterar_dados;
-    pilha->imprimir_item = imprimir_item;
+    pilha->imprimir_dados = imprimir_dados;
     pilha->inserir_dados = inserir_dados;
 
     return pilha;
 }
 
-void push_pilha_item(Pilha *pilha, ItemPilha *item)
+void pilha_push_item(Pilha *pilha, PilhaItem *item)
 {
     item->anterior = pilha->topo;
     pilha->topo = item;
@@ -49,110 +49,110 @@ void push_pilha_item(Pilha *pilha, ItemPilha *item)
     pilha->tamanho++;
 }
 
-void push_pilha(Pilha *pilha, void *dados)
+void pilha_push(Pilha *pilha, void *dados)
 {
-    ItemPilha *item = novo_item_pilha(pilha->inserir_dados(dados));
+    PilhaItem *item = pilha_item_novo(pilha->inserir_dados(dados));
 
-    push_pilha_item(pilha, item);
+    pilha_push_item(pilha, item);
 }
 
-ItemPilha *pop_pilha(Pilha *pilha)
+PilhaItem *pilha_pop(Pilha *pilha)
 {
-    ItemPilha *item = pilha->topo;
+    PilhaItem *item = pilha->topo;
     pilha->topo = item->anterior;
     pilha->tamanho--;
 
     return item;
 }
 
-ItemPilha *item_base(ItemPilha *item)
+PilhaItem *pilha_item_base(PilhaItem *item)
 {
     if (item->anterior == NULL)
         return item;
     
-    return item_base(item->anterior);
+    return pilha_item_base(item->anterior);
 }
 
-ItemPilha *base_pilha(Pilha *pilha)
+PilhaItem *pilha_base(Pilha *pilha)
 {
-    return item_base(pilha->topo);
+    return pilha_item_base(pilha->topo);
 }
 
-void limpar_pilha(Pilha *pilha)
+void pilha_limpar(Pilha *pilha)
 {
     while(pilha->topo != NULL)
     {
-        remover_item_pilha(pilha, pop_pilha(pilha));
+        pilha_item_remover(pilha, pilha_pop(pilha));
     }
 }
 
-void excluir_pilha(Pilha *pilha)
+void pilha_excluir(Pilha *pilha)
 {
-    limpar_pilha(pilha);
+    pilha_limpar(pilha);
     free(pilha);
 }
 
-void inverter_itens_pilha(ItemPilha *item, ItemPilha *anterior)
+void pilha_inverter_itens(PilhaItem *item, PilhaItem *anterior)
 {
     if (item == NULL)
         return;
     
-    inverter_itens_pilha(item->anterior, item);
+    pilha_inverter_itens(item->anterior, item);
     item->anterior = anterior;
 }
 
-void inverter_pilha(Pilha *pilha)
+void pilha_inverter(Pilha *pilha)
 {
-    ItemPilha *base = base_pilha(pilha);
-    inverter_itens_pilha(pilha->topo, NULL);
+    PilhaItem *base = pilha_base(pilha);
+    pilha_inverter_itens(pilha->topo, NULL);
     pilha->topo = base;
 }
 
-void copiar_itens_pilha(Pilha *pilha, Pilha *copia)
+void pilha_copiar_itens(Pilha *pilha, Pilha *copia)
 {
-    ItemPilha *item = pilha->topo;
+    PilhaItem *item = pilha->topo;
     while (item != NULL)
     {
-        push_pilha(copia, item->dados);
+        pilha_push(copia, item->dados);
         item = item->anterior;
     }
 
-    inverter_pilha(copia);
+    pilha_inverter(copia);
 }
 
-Pilha *clonar_pilha(Pilha *pilha)
+Pilha *pilha_clonar(Pilha *pilha)
 {
-    Pilha *clone = nova_pilha(pilha->liberar_dados, pilha->comparar_dados, pilha->alterar_dados, pilha->imprimir_item, pilha->inserir_dados);
-    copiar_itens_pilha(pilha, clone);
+    Pilha *clone = pilha_criar(pilha->liberar_dados, pilha->comparar_dados, pilha->alterar_dados, pilha->imprimir_dados, pilha->inserir_dados);
+    pilha_copiar_itens(pilha, clone);
     return clone;
 }
 
-void ordenar_pilha(Pilha *pilha)
+void pilha_ordenar(Pilha *pilha)
 {
-    Pilha *pilha_ordenada = nova_pilha(pilha->liberar_dados, pilha->comparar_dados, pilha->alterar_dados, pilha->imprimir_item, pilha->inserir_dados);
-    ItemPilha *item;
-    ItemPilha *item_aux;
+    Pilha *pilha_ordenada = pilha_criar(pilha->liberar_dados, pilha->comparar_dados, pilha->alterar_dados, pilha->imprimir_dados, pilha->inserir_dados);
+    PilhaItem *item;
+    PilhaItem *item_aux;
 
     while (pilha->tamanho > 0)
     {
-        item = pop_pilha(pilha);
+        item = pilha_pop(pilha);
         item_aux = pilha_ordenada->topo;
         while (item_aux != NULL && pilha->comparar_dados(item->dados, item_aux->dados) < 0)
         {
-            push_pilha_item(pilha, pop_pilha(pilha_ordenada));
+            pilha_push_item(pilha, pilha_pop(pilha_ordenada));
             item_aux = pilha_ordenada->topo;
         }
 
-        push_pilha_item(pilha_ordenada, item);
+        pilha_push_item(pilha_ordenada, item);
     }
 
-    copiar_itens_pilha(pilha_ordenada, pilha);
-    excluir_pilha(pilha_ordenada);
+    pilha_copiar_itens(pilha_ordenada, pilha);
+    pilha_excluir(pilha_ordenada);
 }
 
 int pilha_contem(Pilha *pilha, void *dados)
 {
-    ItemPilha *item = pilha->topo;
+    PilhaItem *item = pilha->topo;
     while (item != NULL)
     {
         if (pilha->comparar_dados(item->dados, dados) == 0)
@@ -164,15 +164,15 @@ int pilha_contem(Pilha *pilha, void *dados)
     return 0;
 }
 
-void imprimir_pilha(Pilha *pilha)
+void pilha_imprimir(Pilha *pilha)
 {
     printf("- IMPRIMINDO PILHA -\n");
     printf("Tamanho: %d\n", pilha->tamanho);
     
-    ItemPilha *item = pilha->topo;
+    PilhaItem *item = pilha->topo;
     while (item != NULL)
     {
-        pilha->imprimir_item(item->dados);
+        pilha->imprimir_dados(item->dados);
         item = item->anterior;
         printf("\n");
     }

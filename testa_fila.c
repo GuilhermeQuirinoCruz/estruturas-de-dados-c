@@ -7,7 +7,7 @@ void testa_fila_inteiro()
 {
     printf("\n- Testando fila de inteiros -\n");
     printf("Criando nova fila:\n");
-    Fila *fila_inteiro = fila_criar(liberar_inteiro, comparar_inteiros, alterar_inteiro, imprimir_inteiro, novo_inteiro);
+    Fila *fila_inteiro = fila_criar(inteiro_liberar, inteiro_comparar, inteiro_alterar, imprimir_inteiro, inteiro_novo);
 
     int aux;
     aux = 1;

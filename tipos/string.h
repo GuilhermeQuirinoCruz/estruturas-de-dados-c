@@ -5,8 +5,8 @@ typedef struct
     char *valor;
 } String;
 
-void *nova_string(void *valor);
-void liberar_string(void *string);
-int comparar_strings(void *string1, void *string2);
-void alterar_string(void *string, void *dados);
-void imprimir_string(void *string);
+void *string_nova(void *valor);
+void string_liberar(void *string);
+int string_comparar(void *string1, void *string2);
+void string_alterar(void *string, void *dados);
+void string_imprimir(void *string);

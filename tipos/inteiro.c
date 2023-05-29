@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "inteiro.h"
 
-void *novo_inteiro(void *valor)
+void *inteiro_novo(void *valor)
 {
     NumeroInteiro *numero = (NumeroInteiro *)malloc(sizeof(NumeroInteiro));
     numero->valor = *((int *)valor);
@@ -10,13 +10,13 @@ void *novo_inteiro(void *valor)
     return numero;
 }
 
-void liberar_inteiro(void *inteiro)
+void inteiro_liberar(void *inteiro)
 {
     NumeroInteiro *numero = (NumeroInteiro *)inteiro;
     free(numero);
 }
 
-int comparar_inteiros(void *inteiro1, void *inteiro2)
+int inteiro_comparar(void *inteiro1, void *inteiro2)
 {
     NumeroInteiro *numero1 = (NumeroInteiro *)inteiro1;
     NumeroInteiro *numero2 = (NumeroInteiro *)inteiro2;
@@ -26,7 +26,7 @@ int comparar_inteiros(void *inteiro1, void *inteiro2)
     return ((diferenca > 0) - (diferenca < 0));
 }
 
-void alterar_inteiro(void *inteiro, void *dados)
+void inteiro_alterar(void *inteiro, void *dados)
 {
     NumeroInteiro *numero = (NumeroInteiro *)inteiro;
     numero->valor = *(int *)dados;

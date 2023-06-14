@@ -8,7 +8,7 @@ void testa_lista_inteiros()
 {
     printf("\n- Testando lista de inteiros -\n");
     printf("Criando nova lista:\n");
-    Lista *lista_inteiro = lista_criar(inteiro_liberar, inteiro_comparar, inteiro_alterar, imprimir_inteiro, inteiro_novo);
+    Lista *lista_inteiro = lista_criar(inteiro_liberar, inteiro_comparar, inteiro_alterar, inteiro_imprimir, inteiro_novo);
     int aux;
     aux = 10;
     

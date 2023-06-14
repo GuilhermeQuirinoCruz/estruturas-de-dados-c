@@ -26,7 +26,7 @@ void inteiro_alterar(void *inteiro, void *dados)
     *((int *)inteiro) = *(int *)dados;
 }
 
-void imprimir_inteiro(void *inteiro)
+void inteiro_imprimir(void *inteiro)
 {
     printf("%d", *((int *)inteiro));
 }

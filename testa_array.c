@@ -10,7 +10,7 @@ void testa_array_inteiro()
     Array *array_inteiro = array_criar(10, sizeof(int), inteiro_liberar, inteiro_comparar, inteiro_alterar, inteiro_imprimir, inteiro_novo);
     array_imprimir(array_inteiro);
 
-    printf("\nInserindo itens em posições aleatórias\n");
+    printf("\nInserindo itens em posições aleatórias:\n");
     int aux;
     aux = 5;
     array_item_set(array_inteiro, 0, &aux);
@@ -33,12 +33,45 @@ void testa_array_inteiro()
     array_item_set(array_inteiro, 7, &aux);
     array_imprimir(array_inteiro);
     
-    printf("\nAlterando o tamanho:\n");
+    printf("\nAumentando o tamanho:\n");
     array_alterar_tamanho(array_inteiro, 20);
+    array_imprimir(array_inteiro);
+
+    printf("\nTrocando os itens [0] e [1]:\n");
+    array_item_trocar(array_inteiro, 0, 1);
     array_imprimir(array_inteiro);
 
     printf("\nLimpando:\n");
     array_limpar(array_inteiro);
+    array_imprimir(array_inteiro);
+
+    printf("\nDiminuindo o tamanho:\n");
+    array_alterar_tamanho(array_inteiro, 9);
+    array_imprimir(array_inteiro);
+
+    printf("\nInserindo novos itens:\n");
+    aux = 8;
+    array_item_set(array_inteiro, 0, &aux);
+    aux = 2;
+    array_item_set(array_inteiro, 1, &aux);
+    aux = 4;
+    array_item_set(array_inteiro, 2, &aux);
+    aux = 7;
+    array_item_set(array_inteiro, 3, &aux);
+    aux = 1;
+    array_item_set(array_inteiro, 4, &aux);
+    aux = 3;
+    array_item_set(array_inteiro, 5, &aux);
+    aux = 9;
+    array_item_set(array_inteiro, 6, &aux);
+    aux = 6;
+    array_item_set(array_inteiro, 7, &aux);
+    aux = 5;
+    array_item_set(array_inteiro, 8, &aux);
+    array_imprimir(array_inteiro);
+
+    printf("\nOrdenando com quicksort:\n");
+    array_ordenar_quicksort(array_inteiro);
     array_imprimir(array_inteiro);
 
     array_excluir(array_inteiro);

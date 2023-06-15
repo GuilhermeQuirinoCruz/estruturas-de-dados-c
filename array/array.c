@@ -52,6 +52,15 @@ void *array_item_get(Array *array, int i)
     return (array->inicio + (array->item_tamanho * i));
 }
 
+void array_item_trocar(Array *array, int i, int i2)
+{
+    char *troca = (char *)malloc(array->item_tamanho);
+    memcpy(troca, array_item_get(array, i), array->item_tamanho);
+    memcpy(array_item_get(array, i), array_item_get(array, i2), array->item_tamanho);
+    memcpy(array_item_get(array, i2), troca, array->item_tamanho);
+    free(troca);
+}
+
 void array_alterar_tamanho(Array *array, int tamanho)
 {
     array->inicio = realloc(array->inicio, tamanho * array->item_tamanho);
@@ -68,7 +77,7 @@ void array_imprimir(Array *array)
 
     int i;
     char *final = array->inicio + (array->tamanho * array->item_tamanho);
-    for(char *posicao = array->inicio, i = 0;
+    for (char *posicao = array->inicio, i = 0;
         posicao < final;
         posicao += array->item_tamanho, i++)
     {
@@ -76,4 +85,34 @@ void array_imprimir(Array *array)
         array->imprimir_dados(posicao);
         printf("\n");
     }
+}
+
+void array_quicksort(Array *array, int inicio, int fim)
+{
+    if (inicio >= fim)
+        return;
+
+    int j = inicio;
+    int i = j - 1;
+    while (j < fim)
+    {
+        if (array->comparar_dados(array_item_get(array, j), array_item_get(array, fim)) <= 0)
+        {
+            i++;
+            if (i != j)
+                array_item_trocar(array, i, j);
+        }
+
+        j++;
+    }
+
+    i++;
+    array_item_trocar(array, i, fim);
+    array_quicksort(array, inicio, i - 1);
+    array_quicksort(array, i + 1, fim);
+}
+
+void array_ordenar_quicksort(Array *array)
+{
+    array_quicksort(array, 0, array->tamanho - 1);
 }

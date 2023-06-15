@@ -87,6 +87,28 @@ void array_imprimir(Array *array)
     }
 }
 
+void array_inverter(Array *array)
+{
+    for (int i = 0; i < array->tamanho / 2; i++)
+    {
+        array_item_trocar(array, i, array->tamanho - 1 - i);
+    }
+}
+
+Array *array_clonar(Array *array)
+{
+    Array *clone = array_criar(
+        array->tamanho,
+        array->item_tamanho,
+        array->liberar_dados,
+        array->comparar_dados,
+        array->alterar_dados,
+        array->imprimir_dados,
+        array->inserir_dados);
+
+    clone->inicio = (char*)memcpy(clone->inicio, array->inicio, array->tamanho * array->item_tamanho);
+}
+
 void array_quicksort(Array *array, int inicio, int fim)
 {
     if (inicio >= fim)
@@ -115,4 +137,41 @@ void array_quicksort(Array *array, int inicio, int fim)
 void array_ordenar_quicksort(Array *array)
 {
     array_quicksort(array, 0, array->tamanho - 1);
+}
+
+int array_busca_sequencial(Array *array, void *dados)
+{
+    for (int i = 0; i < array->tamanho; i++)
+    {
+        if (array->comparar_dados(array_item_get(array, i), dados) == 0)
+            return i;
+    }
+
+    return -1;
+}
+
+int array_busca_binaria(Array *array, void *dados)
+{
+    int inicio = 0;
+    int fim = array->tamanho - 1;
+    int meio;
+    void *array_meio;
+    int comparacao;
+
+    while (inicio < fim)
+    {
+        meio = (inicio + fim) / 2;
+        array_meio = array_item_get(array, meio);
+        comparacao = array->comparar_dados(array_meio, dados);
+        
+        if (comparacao == 0)
+            return meio;
+        
+        if (comparacao < 0)
+            inicio = meio;
+        
+        fim = meio;
+    }
+
+    return -1;
 }

@@ -74,22 +74,22 @@ void testa_array_inteiro()
     array_ordenar_quicksort(array_inteiro);
     array_imprimir(array_inteiro);
 
-    printf("\nTestando busca sequencial:");
+    printf("\n- Busca sequencial -\n");
     aux = 3;
-    printf("\nBuscando item [%d], que está no array\n", aux);
+    printf("Buscando item [%d], que está no array\n", aux);
     printf("Posição: %d\n", array_busca_sequencial(array_inteiro, &aux));
 
     aux = 10;
-    printf("\nBuscando item [%d], que não está no array\n", aux);
+    printf("Buscando item [%d], que não está no array\n", aux);
     printf("Posição: %d\n", array_busca_sequencial(array_inteiro, &aux));
 
-    printf("\nTestando busca binária:");
+    printf("\n- Busca binária -\n");
     aux = 3;
-    printf("\nBuscando item [%d], que está no array\n", aux);
+    printf("Buscando item [%d], que está no array\n", aux);
     printf("Posição: %d\n", array_busca_binaria(array_inteiro, &aux));
 
     aux = 10;
-    printf("\nBuscando item [%d], que não está no array\n", aux);
+    printf("Buscando item [%d], que não está no array\n", aux);
     printf("Posição: %d\n", array_busca_binaria(array_inteiro, &aux));
 
     printf("\nInvertendo:\n");
@@ -99,6 +99,13 @@ void testa_array_inteiro()
     printf("\nClonando:\n");
     Array *array_inteiro_clone = array_clonar(array_inteiro);
     array_imprimir(array_inteiro_clone);
+
+    printf("\nValor mínimo: ");
+    array_inteiro->imprimir_dados(array_minimo(array_inteiro));
+
+    printf("\nValor máximo: ");
+    array_inteiro->imprimir_dados(array_maximo(array_inteiro));
+    printf("\n");
 
     array_excluir(array_inteiro);
     array_excluir(array_inteiro_clone);

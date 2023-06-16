@@ -175,3 +175,33 @@ int array_busca_binaria(Array *array, void *dados)
 
     return -1;
 }
+
+void *array_minimo(Array *array)
+{
+    char *minimo = array->inicio;
+    char *item;
+
+    for (int i = 1; i < array->tamanho; i++)
+    {
+        item = array_item_get(array, i);
+        if (array->comparar_dados(item, minimo) < 0)
+            minimo = item;
+    }
+    
+    return (void *)minimo;
+}
+
+void *array_maximo(Array *array)
+{
+    char *maximo = array->inicio;
+    char *item;
+
+    for (int i = 1; i < array->tamanho; i++)
+    {
+        item = array_item_get(array, i);
+        if (array->comparar_dados(item, maximo) > 0)
+            maximo = item;
+    }
+    
+    return (void *)maximo;
+}

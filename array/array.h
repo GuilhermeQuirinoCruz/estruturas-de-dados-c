@@ -35,3 +35,5 @@ void array_quicksort(Array *array, int inicio, int fim);
 void array_ordenar_quicksort(Array *array);
 int array_busca_sequencial(Array *array, void *dados);
 int array_busca_binaria(Array *array, void *dados);
+void *array_minimo(Array *array);
+void *array_maximo(Array *array);

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <windows.h>
+// #include <windows.h>
 #include "array/array.h"
 #include "tipos/inteiro.h"
 
@@ -113,8 +113,8 @@ void testa_array_inteiro()
 
 int main()
 {
-    // gcc -o testa_array.exe testa_array.c array/array.c tipos/inteiro.c
-    SetConsoleOutputCP(65001);
+    // gcc -o testa_array.out testa_array.c array/array.c tipos/inteiro.c
+    // SetConsoleOutputCP(65001);
 
     testa_array_inteiro();
 

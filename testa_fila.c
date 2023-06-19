@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <windows.h>
+// #include <windows.h>
 #include "fila/fila.h"
 #include "tipos/inteiro.h"
 
@@ -45,8 +45,8 @@ void testa_fila_inteiro()
 
 int main()
 {
-    // gcc -o testa_fila.exe testa_fila.c fila/fila.c tipos/inteiro.c
-    SetConsoleOutputCP(65001);
+    // gcc -o testa_fila.out testa_fila.c fila/fila.c tipos/inteiro.c
+    // SetConsoleOutputCP(65001);
 
     testa_fila_inteiro();
 }

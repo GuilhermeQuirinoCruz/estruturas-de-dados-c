@@ -2,4 +2,4 @@
 Estruturas de dados em linguagem C
 
 ## Comando para compilação
-gcc -o saida.exe src1.c src2.c ... srcn.c
+gcc -o saida.out src1.c src2.c ... srcn.c

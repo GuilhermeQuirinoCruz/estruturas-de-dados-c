@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <windows.h>
+// #include <windows.h>
 #include "lista_ligada/lista_ligada.h"
 #include "tipos/inteiro.h"
 #include "tipos/string.h"
@@ -40,12 +40,12 @@ void testa_lista_inteiros()
     lista_item_inserir(lista_inteiro, &aux);
     lista_imprimir(lista_inteiro);
 
-    printf("\nBuscando item que está na lista:\n");
     aux = 3;
+    printf("\nBuscando item [%d], que está na lista:\n", aux);
     printf("Posição: %d\n", lista_item_posicao(lista_inteiro, &aux));
 
-    printf("\nBuscando item que não está na lista:\n");
     aux = 6;
+    printf("\nBuscando item [%d], que não está na lista:\n", aux);
     printf("Posição: %d\n", lista_item_posicao(lista_inteiro, &aux));
 
     printf("\nBuscando item na posição 0: ");
@@ -129,10 +129,10 @@ void testa_lista_strings()
 
 int main()
 {
-    // gcc -o testa_lista_ligada.exe testa_lista_ligada.c lista_ligada/lista_ligada.c tipos/inteiro.c tipos/string.c
-    SetConsoleOutputCP(65001);
+    // gcc -o testa_lista_ligada.out testa_lista_ligada.c lista_ligada/lista_ligada.c tipos/inteiro.c tipos/string.c
+    // SetConsoleOutputCP(65001);
 
-    // testa_lista_inteiros();
+    testa_lista_inteiros();
     testa_lista_strings();
 
     return 0;

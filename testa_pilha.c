@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <windows.h>
+// #include <windows.h>
 #include "pilha/pilha.h"
 #include "tipos/inteiro.h"
 
@@ -69,8 +69,8 @@ void testa_pilha_inteiros()
 
 int main()
 {
-    // gcc -o testa_pilha.exe testa_pilha.c pilha/pilha.c tipos/inteiro.c
-    SetConsoleOutputCP(65001);
+    // gcc -o testa_pilha.out testa_pilha.c pilha/pilha.c tipos/inteiro.c
+    // SetConsoleOutputCP(65001);
     testa_pilha_inteiros();
 
     return 0;

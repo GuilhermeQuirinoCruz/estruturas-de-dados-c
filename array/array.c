@@ -31,11 +31,17 @@ Array *array_criar(
 
 void array_limpar(Array *array)
 {
+    if (array == NULL)
+        return;
+    
     memset(array->inicio, 0, array->tamanho * array->item_tamanho);
 }
 
 void array_excluir(Array *array)
 {
+    if (array == NULL)
+        return;
+    
     array_limpar(array);
     free(array->inicio);
     free(array);
@@ -43,17 +49,28 @@ void array_excluir(Array *array)
 
 void array_item_set(Array *array, int i, void *dados)
 {
+    if (array == NULL || i < 0 || i >= array->tamanho)
+        return;
+    
     void *posicao = array->inicio + (array->item_tamanho * i);
     memcpy(posicao, dados, array->item_tamanho);
 }
 
 void *array_item_get(Array *array, int i)
 {
+    if (array == NULL || i < 0 || i >= array->tamanho)
+        return NULL;
+
     return (array->inicio + (array->item_tamanho * i));
 }
 
 void array_item_trocar(Array *array, int i, int i2)
 {
+    if (array == NULL
+    || i < 0 || i >= array->tamanho
+    || i2 < 0 || i2 >= array->tamanho)
+        return;
+    
     char *troca = (char *)malloc(array->item_tamanho);
     memcpy(troca, array_item_get(array, i), array->item_tamanho);
     memcpy(array_item_get(array, i), array_item_get(array, i2), array->item_tamanho);
@@ -63,15 +80,24 @@ void array_item_trocar(Array *array, int i, int i2)
 
 void array_alterar_tamanho(Array *array, int tamanho)
 {
-    array->inicio = realloc(array->inicio, tamanho * array->item_tamanho);
+    if (array == NULL || tamanho < 0)
+        return;
+    
+    array->inicio = (char *)realloc(array->inicio, tamanho * array->item_tamanho);
     if (tamanho > array->tamanho)
-        memset(array_item_get(array, array->tamanho), 0, (tamanho - array->tamanho) * array->item_tamanho);
+        memset(array->inicio + (array->item_tamanho * array->tamanho), 0, (tamanho - array->tamanho) * array->item_tamanho);
     
     array->tamanho = tamanho;
 }
 
 void array_imprimir(Array *array)
 {
+    if (array == NULL)
+    {
+        printf("Array nulo\n");
+        return;
+    }
+
     printf("- IMPRIMINDO ARRAY -\n");
     printf("Tamanho: %d\n", array->tamanho);
 
@@ -89,14 +115,18 @@ void array_imprimir(Array *array)
 
 void array_inverter(Array *array)
 {
+    if (array == NULL)
+        return;
+    
     for (int i = 0; i < array->tamanho / 2; i++)
-    {
         array_item_trocar(array, i, array->tamanho - 1 - i);
-    }
 }
 
 Array *array_clonar(Array *array)
 {
+    if (array == NULL)
+        return NULL;
+    
     Array *clone = array_criar(
         array->tamanho,
         array->item_tamanho,
@@ -106,7 +136,9 @@ Array *array_clonar(Array *array)
         array->imprimir_dados,
         array->inserir_dados);
 
-    clone->inicio = (char*)memcpy(clone->inicio, array->inicio, array->tamanho * array->item_tamanho);
+    memcpy(clone->inicio, array->inicio, array->tamanho * array->item_tamanho);
+
+    return clone;
 }
 
 void array_quicksort(Array *array, int inicio, int fim)
@@ -136,11 +168,17 @@ void array_quicksort(Array *array, int inicio, int fim)
 
 void array_ordenar_quicksort(Array *array)
 {
+    if (array == NULL || array->tamanho <= 1)
+        return;
+    
     array_quicksort(array, 0, array->tamanho - 1);
 }
 
 int array_busca_sequencial(Array *array, void *dados)
 {
+    if (array == NULL)
+        return -1;
+    
     for (int i = 0; i < array->tamanho; i++)
     {
         if (array->comparar_dados(array_item_get(array, i), dados) == 0)
@@ -152,25 +190,31 @@ int array_busca_sequencial(Array *array, void *dados)
 
 int array_busca_binaria(Array *array, void *dados)
 {
+    if (array == NULL)
+        return -1;
+    
     int inicio = 0;
     int fim = array->tamanho - 1;
     int meio;
-    void *array_meio;
+    void *item_meio;
     int comparacao;
 
     while (inicio < fim)
     {
         meio = (inicio + fim) / 2;
-        array_meio = array_item_get(array, meio);
-        comparacao = array->comparar_dados(array_meio, dados);
+        item_meio = array_item_get(array, meio);
+        comparacao = array->comparar_dados(item_meio, dados);
         
         if (comparacao == 0)
             return meio;
+
+        if (meio == inicio || meio == fim)
+            break;
         
         if (comparacao < 0)
             inicio = meio;
-        
-        fim = meio;
+        else
+            fim = meio;
     }
 
     return -1;
@@ -178,6 +222,9 @@ int array_busca_binaria(Array *array, void *dados)
 
 void *array_minimo(Array *array)
 {
+    if (array == NULL || array->tamanho == 0)
+        return NULL;
+    
     char *minimo = array->inicio;
     char *item;
 
@@ -193,6 +240,9 @@ void *array_minimo(Array *array)
 
 void *array_maximo(Array *array)
 {
+    if (array == NULL || array->tamanho == 0)
+        return NULL;
+    
     char *maximo = array->inicio;
     char *item;
 

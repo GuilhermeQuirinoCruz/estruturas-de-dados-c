@@ -174,6 +174,65 @@ void array_ordenar_quicksort(Array *array)
     array_quicksort(array, 0, array->tamanho - 1);
 }
 
+void array_mergesort_intercalar(Array *array, Array *aux, int inicio, int meio, int fim)
+{
+    int i = inicio;
+    int i2 = meio + 1;
+    int indice = 0;
+
+    while (i < meio && i2 < fim)
+    {
+        if (array->comparar_dados(array_item_get(array, i), array_item_get(array, i2)) < 0)
+        {
+            array_item_set(aux, indice++, array_item_get(array, i));
+            i++;
+        }
+        else
+        {
+            array_item_set(aux, indice++, array_item_get(array, i2));
+            i2++;
+        }
+    }
+
+    while (i < meio)
+        array_item_set(aux, indice++, array_item_get(array, i));
+    
+    while (i2 < fim)
+        array_item_set(aux, indice++, array_item_get(array, i2));
+    
+    for (i = inicio; i < fim; i++)
+        array_item_set(array, indice++, array_item_get(aux, i));
+    
+}
+
+void array_mergesort(Array *array, Array *aux, int inicio, int fim)
+{
+    if (inicio < fim)
+    {
+        int meio = (inicio + fim) / 2;
+        array_mergesort(array, aux, inicio, meio);
+        array_mergesort(array, aux, meio + 1, fim);
+
+        array_mergesort_intercalar(array, aux, inicio, meio, fim);
+    }
+}
+
+void array_ordenar_mergesort(Array *array)
+{
+    Array *aux = array_criar(
+        (array->tamanho / 2) + 1,
+        array->item_tamanho,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    );
+
+    array_mergesort(array, aux, 0, array->tamanho - 1);
+    array_excluir(aux);
+}
+
 int array_busca_sequencial(Array *array, void *dados)
 {
     if (array == NULL)
@@ -208,13 +267,10 @@ int array_busca_binaria(Array *array, void *dados)
         if (comparacao == 0)
             return meio;
 
-        if (meio == inicio || meio == fim)
-            break;
-        
         if (comparacao < 0)
-            inicio = meio;
+            inicio = meio + 1;
         else
-            fim = meio;
+            fim = meio - 1;
     }
 
     return -1;

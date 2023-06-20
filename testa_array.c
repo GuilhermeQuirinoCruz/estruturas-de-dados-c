@@ -70,9 +70,17 @@ void testa_array_inteiro()
     array_item_set(array_inteiro, 8, &aux);
     array_imprimir(array_inteiro);
 
+    printf("\nClonando:\n");
+    Array *array_inteiro_clone = array_clonar(array_inteiro);
+    array_imprimir(array_inteiro_clone);
+
     printf("\nOrdenando com quicksort:\n");
     array_ordenar_quicksort(array_inteiro);
     array_imprimir(array_inteiro);
+
+    printf("\nOrdenando com mergesort:\n");
+    array_ordenar_quicksort(array_inteiro_clone);
+    array_imprimir(array_inteiro_clone);
 
     printf("\n- Busca sequencial -\n");
     aux = 3;
@@ -95,10 +103,6 @@ void testa_array_inteiro()
     printf("\nInvertendo:\n");
     array_inverter(array_inteiro);
     array_imprimir(array_inteiro);
-
-    printf("\nClonando:\n");
-    Array *array_inteiro_clone = array_clonar(array_inteiro);
-    array_imprimir(array_inteiro_clone);
 
     printf("\nValor mínimo: ");
     array_inteiro->imprimir_dados(array_minimo(array_inteiro));

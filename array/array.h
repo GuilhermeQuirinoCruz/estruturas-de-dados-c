@@ -26,6 +26,7 @@ void array_limpar(Array *array);
 void array_excluir(Array *array);
 void array_item_set(Array *array, int i, void *dados);
 void *array_item_get(Array *array, int i);
+void array_item_insert(Array *array, int indice, void *dados);
 void array_item_trocar(Array *array, int i, int i2);
 void array_alterar_tamanho(Array *array, int tamanho);
 void array_imprimir(Array *array);

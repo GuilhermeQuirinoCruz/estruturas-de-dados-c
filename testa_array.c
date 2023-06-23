@@ -104,6 +104,13 @@ void testa_array_inteiro()
     array_inverter(array_inteiro);
     array_imprimir(array_inteiro);
 
+    printf("\nInsert:\n");
+    aux = 12;
+    array_item_insert(array_inteiro, 5, &aux);
+    aux = 11;
+    array_item_insert(array_inteiro, 5, &aux);
+    array_imprimir(array_inteiro);
+
     printf("\nValor mínimo: ");
     array_inteiro->imprimir_dados(array_minimo(array_inteiro));
 

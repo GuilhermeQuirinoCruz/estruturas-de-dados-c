@@ -47,12 +47,12 @@ void array_excluir(Array *array)
     free(array);
 }
 
-void array_item_set(Array *array, int i, void *dados)
+void array_item_set(Array *array, int indice, void *dados)
 {
-    if (array == NULL || i < 0 || i >= array->tamanho)
+    if (array == NULL || indice < 0 || indice >= array->tamanho)
         return;
     
-    void *posicao = array->inicio + (array->item_tamanho * i);
+    void *posicao = array->inicio + (array->item_tamanho * indice);
     memcpy(posicao, dados, array->item_tamanho);
 }
 
@@ -62,6 +62,17 @@ void *array_item_get(Array *array, int i)
         return NULL;
 
     return (array->inicio + (array->item_tamanho * i));
+}
+
+void array_item_insert(Array *array, int indice, void *dados)
+{
+    if (array == NULL || indice < 0 || indice >= array->tamanho)
+        return;
+    
+    for (int i = array->tamanho - 1; i > indice; i--)
+        array_item_set(array, i, array_item_get(array, i - 1));
+    
+    array_item_set(array, indice, dados);
 }
 
 void array_item_trocar(Array *array, int i, int i2)
@@ -202,7 +213,6 @@ void array_mergesort_intercalar(Array *array, Array *aux, int inicio, int meio, 
     
     for (i = inicio; i < fim; i++)
         array_item_set(array, indice++, array_item_get(aux, i));
-    
 }
 
 void array_mergesort(Array *array, Array *aux, int inicio, int fim)
@@ -219,6 +229,9 @@ void array_mergesort(Array *array, Array *aux, int inicio, int fim)
 
 void array_ordenar_mergesort(Array *array)
 {
+    if (array == NULL || array->tamanho <= 1)
+        return;
+    
     Array *aux = array_criar(
         (array->tamanho / 2) + 1,
         array->item_tamanho,

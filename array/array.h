@@ -17,11 +17,8 @@ typedef struct{
 Array *array_criar(
     unsigned int tamanho,
     unsigned int item_tamanho,
-    void (*liberar_dados)(void *),
     int (*comparar_dados)(void *, void *),
-    void (*alterar_dados)(void *, void *),
-    void (*imprimir_dados)(void *),
-    void *(*inserir_dados)(void *));
+    void (*imprimir_dados)(void *));
 void array_limpar(Array *array);
 void array_excluir(Array *array);
 void array_item_set(Array *array, int i, void *dados);

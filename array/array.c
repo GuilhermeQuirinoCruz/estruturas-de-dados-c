@@ -6,11 +6,8 @@
 Array *array_criar(
     unsigned int tamanho,
     unsigned int item_tamanho,
-    void (*liberar_dados)(void *),
     int (*comparar_dados)(void *, void *),
-    void (*alterar_dados)(void *, void *),
-    void (*imprimir_dados)(void *),
-    void *(*inserir_dados)(void *))
+    void (*imprimir_dados)(void *))
 {
     Array *array = (Array *)malloc(sizeof(Array));
 
@@ -20,11 +17,8 @@ Array *array_criar(
 
     array_limpar(array);
 
-    array->liberar_dados = liberar_dados;
     array->comparar_dados = comparar_dados;
-    array->alterar_dados = alterar_dados;
     array->imprimir_dados = imprimir_dados;
-    array->inserir_dados = inserir_dados;
 
     return array;
 }
@@ -141,11 +135,8 @@ Array *array_clonar(Array *array)
     Array *clone = array_criar(
         array->tamanho,
         array->item_tamanho,
-        array->liberar_dados,
         array->comparar_dados,
-        array->alterar_dados,
-        array->imprimir_dados,
-        array->inserir_dados);
+        array->imprimir_dados);
 
     memcpy(clone->inicio, array->inicio, array->tamanho * array->item_tamanho);
 
@@ -235,9 +226,6 @@ void array_ordenar_mergesort(Array *array)
     Array *aux = array_criar(
         (array->tamanho / 2) + 1,
         array->item_tamanho,
-        NULL,
-        NULL,
-        NULL,
         NULL,
         NULL
     );

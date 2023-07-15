@@ -10,6 +10,11 @@ void *string_nova(void *dados)
     return string;
 }
 
+void string_zerar(void *string)
+{
+    ((char *)string)[0] = 0;
+}
+
 void string_liberar(void *string)
 {
     free((char *)string);

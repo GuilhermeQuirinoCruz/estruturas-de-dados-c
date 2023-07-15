@@ -9,6 +9,11 @@ void *inteiro_novo(void *valor)
     return (void *)inteiro;
 }
 
+void inteiro_zerar(void *inteiro)
+{
+    *((int *)inteiro) = 0;
+}
+
 void inteiro_liberar(void *inteiro)
 {
     free((int *)inteiro);

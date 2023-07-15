@@ -3,9 +3,17 @@
 #include <string.h>
 #include "array.h"
 
+int array_item_zero(Array *array, void *item)
+{
+    char *cmp_zero = (char *)item;
+    return cmp_zero[0] == 0 && !memcmp(cmp_zero, cmp_zero + 1, array->item_tamanho - 1);
+}
+
 Array *array_criar(
     unsigned int tamanho,
     unsigned int item_tamanho,
+    void (*zerar_dados)(void *),
+    void (*liberar_dados)(void *),
     int (*comparar_dados)(void *, void *),
     void (*imprimir_dados)(void *))
 {
@@ -13,14 +21,23 @@ Array *array_criar(
 
     array->tamanho = tamanho;
     array->item_tamanho = item_tamanho;
-    array->inicio = (char *)malloc(tamanho * item_tamanho);
+    array->inicio = (char *)calloc(tamanho, item_tamanho);
 
-    array_limpar(array);
+    // array_limpar(array);
 
+    array->zerar_dados = zerar_dados;
     array->comparar_dados = comparar_dados;
     array->imprimir_dados = imprimir_dados;
 
     return array;
+}
+
+void array_item_excluir(Array *array, void *item)
+{
+    if (array_item_zero(array, item))
+        return;
+    
+    array->zerar_dados(item);
 }
 
 void array_limpar(Array *array)
@@ -28,7 +45,14 @@ void array_limpar(Array *array)
     if (array == NULL)
         return;
     
-    memset(array->inicio, 0, array->tamanho * array->item_tamanho);
+    int i;
+    char *final = array->inicio + (array->tamanho * array->item_tamanho);
+    for (char *item = array->inicio, i = 0;
+        item < final;
+        item += array->item_tamanho, i++)
+    {
+        array_item_excluir(array, item);
+    }
 }
 
 void array_excluir(Array *array)
@@ -45,9 +69,14 @@ void array_item_set(Array *array, int indice, void *dados)
 {
     if (array == NULL || indice < 0 || indice >= array->tamanho)
         return;
+
+    void *item = array->inicio + (array->item_tamanho * indice);
+    if (!array_item_zero(array, item))
+    {
+        array_item_excluir(array, item);
+    }
     
-    void *posicao = array->inicio + (array->item_tamanho * indice);
-    memcpy(posicao, dados, array->item_tamanho);
+    memcpy(item, dados, array->item_tamanho);
 }
 
 void *array_item_get(Array *array, int i)
@@ -135,6 +164,8 @@ Array *array_clonar(Array *array)
     Array *clone = array_criar(
         array->tamanho,
         array->item_tamanho,
+        array->zerar_dados,
+        array->liberar_dados,
         array->comparar_dados,
         array->imprimir_dados);
 
@@ -226,6 +257,8 @@ void array_ordenar_mergesort(Array *array)
     Array *aux = array_criar(
         (array->tamanho / 2) + 1,
         array->item_tamanho,
+        array->zerar_dados,
+        array->liberar_dados,
         NULL,
         NULL
     );

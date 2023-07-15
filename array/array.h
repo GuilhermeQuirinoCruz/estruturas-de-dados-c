@@ -7,6 +7,7 @@ typedef struct{
     unsigned int tamanho;
     unsigned int item_tamanho;
     char *inicio;
+    void (*zerar_dados)(void *);
     void (*liberar_dados)(void *);
     int (*comparar_dados)(void *, void *);
     void (*alterar_dados)(void *, void *);
@@ -14,9 +15,12 @@ typedef struct{
     void *(*inserir_dados)(void *);
 } Array;
 
+int array_item_zero(Array *array, void *item);
 Array *array_criar(
     unsigned int tamanho,
     unsigned int item_tamanho,
+    void (*zerar_dados)(void *),
+    void (*liberar_dados)(void *),
     int (*comparar_dados)(void *, void *),
     void (*imprimir_dados)(void *));
 void array_limpar(Array *array);

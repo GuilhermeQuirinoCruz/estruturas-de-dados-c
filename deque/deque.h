@@ -35,4 +35,6 @@ void deque_limpar(Deque *deque);
 void deque_excluir(Deque *deque);
 void deque_inserir_inicio(Deque *deque, void *dados);
 void deque_inserir_fim(Deque *deque, void *dados);
+void deque_remover_por_dados(Deque *deque, void *dados);
 void deque_imprimir(Deque *deque);
+void deque_imprimir_invertido(Deque *deque);

@@ -49,4 +49,6 @@ int main()
     // SetConsoleOutputCP(65001);
 
     testa_fila_inteiro();
+
+    return 0;
 }

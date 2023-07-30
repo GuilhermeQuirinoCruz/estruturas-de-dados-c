@@ -29,6 +29,23 @@ void testa_deque_inteiro()
     deque_inserir_fim(deque_inteiro, &aux);
     deque_imprimir(deque_inteiro);
 
+    printf("\nRemovendo item do início:\n");
+    aux = 1;
+    deque_remover_por_dados(deque_inteiro, &aux);
+    deque_imprimir(deque_inteiro);
+
+    printf("\nRemovendo item do fim:\n");
+    aux = 5;
+    deque_remover_por_dados(deque_inteiro, &aux);
+    deque_imprimir(deque_inteiro);
+
+    printf("\nRemovendo item do meio:\n");
+    aux = 3;
+    deque_remover_por_dados(deque_inteiro, &aux);
+    deque_imprimir(deque_inteiro);
+
+
+
     deque_excluir(deque_inteiro);
 }
 
@@ -38,4 +55,6 @@ int main()
     // SetConsoleOutputCP(65001);
 
     testa_deque_inteiro();
+
+    return 0;
 }

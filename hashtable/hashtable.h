@@ -18,7 +18,7 @@ typedef struct
 {
     unsigned int capacidade;
     HashtableBucket *buckets;
-    int (*tamanho_chave)(void *);
+    int tamanho_chave;
     void (*liberar_chave)(void *);
     int (*comparar_chave)(void *, void *);
     void (*imprimir_chave)(void *);
@@ -36,7 +36,7 @@ void hashtable_item_excluir(HashtableItem *item);
 void hashtable_item_remover(Hashtable *hashtable, HashtableItem *item);
 Hashtable *hashtable_criar(
     unsigned int capacidade,
-    int (*tamanho_chave)(void *),
+    int tamanho_chave,
     void (*liberar_chave)(void *),
     int (*comparar_chave)(void *, void *),
     void (*imprimir_chave)(void *),
@@ -48,8 +48,11 @@ Hashtable *hashtable_criar(
     void *(*inserir_dados)(void *));
 void hashtable_bucket_limpar(Hashtable *hashtable, HashtableBucket *bucket);
 void hashtable_limpar(Hashtable *hashtable);
+HashtableItem *hashtable_bucket_get(Hashtable *hashtable, HashtableBucket *bucket, void *chave);
 void hashtable_excluir(Hashtable *hashtable);
 void hashtable_bucket_adicionar(Hashtable *hashtable, HashtableBucket *bucket, void *chave, void *dados);
 void hashtable_set(Hashtable *hashtable, void *chave, void *dados);
 void *hashtable_get(Hashtable *hashtable, void *chave);
+void hashtable_remover(Hashtable *hashtable, void *chave);
 void hashtable_imprimir(Hashtable *hashtable);
+void hashtable_imprimir_item(Hashtable *hashtable, HashtableItem *item);

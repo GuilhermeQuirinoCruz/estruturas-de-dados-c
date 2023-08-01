@@ -7,9 +7,10 @@ int hash_chave(void *chave, int bytes_chave, int maximo)
 {
     unsigned char *bytes = (unsigned char *)chave;
 
-    int hash = 1731273;
+    int hash = 0;
     for (int i = 0; i < bytes_chave; i++)
-        hash = bytes[i] + (hash << 1) + (hash >> 1) - hash;
+        // hash = bytes[i] + (hash << 6) + (hash << 16) - hash;
+        hash = ((hash << 5) + hash) + bytes[i];
 
     return abs(hash) % maximo;
 }
@@ -38,7 +39,7 @@ void hashtable_item_remover(Hashtable *hashtable, HashtableItem *item)
 
 Hashtable *hashtable_criar(
     unsigned int capacidade,
-    int (*tamanho_chave)(void *),
+    int tamanho_chave,
     void (*liberar_chave)(void *),
     int (*comparar_chave)(void *, void *),
     void (*imprimir_chave)(void *),
@@ -94,47 +95,74 @@ void hashtable_excluir(Hashtable *hashtable)
     free(hashtable);
 }
 
-void hashtable_bucket_adicionar(Hashtable *hashtable, HashtableBucket *bucket, void *chave, void *dados)
+HashtableItem *hashtable_bucket_get(Hashtable *hashtable, HashtableBucket *bucket, void *chave)
 {
-    if (bucket->primeiro_item == NULL)
-    {
-        HashtableItem *novo_item = hashtable_item_novo(hashtable->inserir_chave(chave), hashtable->inserir_dados(dados));
-        bucket->primeiro_item = novo_item;
-        bucket->tamanho = 1;
-        return;
-    }
-
     HashtableItem *item = bucket->primeiro_item;
-    while (1)
+    while (item != NULL)
     {
         if (hashtable->comparar_chave(item->chave, chave) == 0)
-        {
-            hashtable->alterar_dados(item->dados, dados);
-
-            return;
-        }
-
-        if (item->proximo == NULL)
             break;
-        
+
         item = item->proximo;
     }
 
-    printf("\nnovo item\n");
-    HashtableItem *novo_item = hashtable_item_novo(hashtable->inserir_chave(chave), hashtable->inserir_dados(dados));
-    item->proximo = novo_item;
+    return item;
+}
+
+void hashtable_bucket_adicionar(Hashtable *hashtable, HashtableBucket *bucket, void *chave, void *dados)
+{
+    HashtableItem *item = hashtable_bucket_get(hashtable, bucket, chave);
+    if (item != NULL)
+    {
+        hashtable->alterar_dados(item->dados, dados);
+
+        return;
+    }
+
+    item = hashtable_item_novo(hashtable->inserir_chave(chave), hashtable->inserir_dados(dados));
+    item->proximo = bucket->primeiro_item;
+    bucket->primeiro_item = item;
     bucket->tamanho++;
 }
 
 void hashtable_set(Hashtable *hashtable, void *chave, void *dados)
 {
-    int hash = hash_chave(chave, hashtable->tamanho_chave(chave), hashtable->capacidade);
+    int hash = hash_chave(chave, hashtable->tamanho_chave, hashtable->capacidade);
     hashtable_bucket_adicionar(hashtable, &(hashtable->buckets[hash]), chave, dados);
 }
 
 void *hashtable_get(Hashtable *hashtable, void *chave)
 {
+    int hash = hash_chave(chave, hashtable->tamanho_chave, hashtable->capacidade);
+    return hashtable_bucket_get(hashtable, &(hashtable->buckets[hash]), chave);
+}
 
+void hashtable_remover(Hashtable *hashtable, void *chave)
+{
+    int hash = hash_chave(chave, hashtable->tamanho_chave, hashtable->capacidade);
+    HashtableBucket *bucket = &(hashtable->buckets[hash]);
+    HashtableItem *item = bucket->primeiro_item;
+    HashtableItem *anterior = NULL;
+    while (item != NULL)
+    {
+        if (hashtable->comparar_chave(item->chave, chave) == 0)
+        {
+            if (anterior == NULL)
+                bucket->primeiro_item = item->proximo;
+            else
+                anterior->proximo = item->proximo;
+            
+            hashtable_item_remover(hashtable, item);
+            bucket->tamanho--;
+            if (bucket->tamanho == 0)
+                bucket->primeiro_item = NULL;
+            
+            return;
+        }
+
+        anterior = item;
+        item = item->proximo;
+    }
 }
 
 void hashtable_imprimir(Hashtable *hashtable)
@@ -147,17 +175,22 @@ void hashtable_imprimir(Hashtable *hashtable)
     {
         item = hashtable->buckets[i].primeiro_item;
         if (item != NULL)
-            printf("Bucket [%d]:\n", i);
+            printf("Bucket [%d], tamanho [%d]:\n", i, hashtable->buckets[i].tamanho);
         while (item != NULL)
         {
-            printf("Chave: ");
-            hashtable->imprimir_chave(item->chave);
-
-            printf(", dados: ");
-            hashtable->imprimir_dados(item->dados);
-            printf("\n");
+            hashtable_imprimir_item(hashtable, item);
 
             item = item->proximo;
+            printf("\n");
         }
     }
+}
+
+void hashtable_imprimir_item(Hashtable *hashtable, HashtableItem *item)
+{
+    printf("- Chave: ");
+    hashtable->imprimir_chave(item->chave);
+
+    printf(", dados: ");
+    hashtable->imprimir_dados(item->dados);
 }

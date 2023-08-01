@@ -2,6 +2,11 @@
 #include <stdio.h>
 #include "inteiro.h"
 
+int inteiro_tamanho(void *inteiro)
+{
+    return sizeof(int);
+}
+
 void *inteiro_novo(void *valor)
 {
     int *inteiro = malloc(sizeof(int));

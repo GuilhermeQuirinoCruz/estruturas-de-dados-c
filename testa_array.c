@@ -5,9 +5,15 @@
 
 void testa_array_inteiro()
 {
-    printf("- Testando array de inteiros -\n");
+    printf("\n- Testando array de inteiros -\n");
     printf("Criando novo array:\n");
-    Array *array_inteiro = array_criar(10, sizeof(int), inteiro_zerar, inteiro_liberar, inteiro_comparar, inteiro_imprimir);
+    Array *array_inteiro = array_criar(
+        10,
+        sizeof(int),
+        inteiro_zerar,
+        inteiro_liberar,
+        inteiro_comparar,
+        inteiro_imprimir);
     array_imprimir(array_inteiro);
 
     printf("\nInserindo itens em posições aleatórias:\n");

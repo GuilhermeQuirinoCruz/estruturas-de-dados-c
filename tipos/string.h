@@ -1,5 +1,6 @@
 #pragma once
 
+int string_tamanho(void *string);
 void *string_nova(void *valor);
 void string_zerar(void *string);
 void string_liberar(void *string);

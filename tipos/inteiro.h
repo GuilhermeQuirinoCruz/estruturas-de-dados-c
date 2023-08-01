@@ -1,5 +1,6 @@
 #pragma once
 
+int inteiro_tamanho(void *inteiro);
 void *inteiro_novo(void *valor);
 void inteiro_zerar(void *inteiro);
 void inteiro_liberar(void *inteiro);

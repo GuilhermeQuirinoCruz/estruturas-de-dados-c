@@ -8,7 +8,12 @@ void testa_deque_inteiro()
     printf("\n- Testando deque de inteiros -\n");
     printf("Criando novo deque:\n");
 
-    Deque *deque_inteiro = deque_criar(inteiro_liberar, inteiro_comparar, inteiro_alterar, inteiro_imprimir, inteiro_novo);
+    Deque *deque_inteiro = deque_criar(
+        inteiro_liberar,
+        inteiro_comparar,
+        inteiro_alterar,
+        inteiro_imprimir,
+        inteiro_novo);
 
     int aux;
     aux = 2;

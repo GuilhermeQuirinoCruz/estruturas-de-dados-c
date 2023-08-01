@@ -8,7 +8,12 @@ void testa_lista_inteiros()
 {
     printf("\n- Testando lista de inteiros -\n");
     printf("Criando nova lista:\n");
-    Lista *lista_inteiro = lista_criar(inteiro_liberar, inteiro_comparar, inteiro_alterar, inteiro_imprimir, inteiro_novo);
+    Lista *lista_inteiro = lista_criar(
+        inteiro_liberar,
+        inteiro_comparar,
+        inteiro_alterar,
+        inteiro_imprimir,
+        inteiro_novo);
     int aux;
     aux = 10;
     
@@ -84,7 +89,12 @@ void testa_lista_strings()
 {
     printf("\n- Testando lista de strings -\n");
     printf("Criando nova lista:\n");
-    Lista *lista_strings = lista_criar(string_liberar, string_comparar, string_alterar, string_imprimir, string_nova);
+    Lista *lista_strings = lista_criar(
+        string_liberar,
+        string_comparar,
+        string_alterar,
+        string_imprimir,
+        string_nova);
 
     lista_item_inserir(lista_strings, "string");
     lista_item_inserir(lista_strings, "string na posição 2");

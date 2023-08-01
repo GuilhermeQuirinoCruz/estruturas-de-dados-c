@@ -3,6 +3,11 @@
 #include <string.h>
 #include "string.h"
 
+int string_tamanho(void *string)
+{
+    return strlen((char *)string);
+}
+
 void *string_nova(void *dados)
 {
     char *string = strdup((char *)dados);

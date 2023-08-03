@@ -7,7 +7,12 @@ void testa_pilha_inteiros()
 {
     printf("\n- Testando pilha de inteiros -\n");
     printf("Criando nova pilha:\n");
-    Pilha *pilha_inteiro = pilha_criar(inteiro_liberar, inteiro_comparar, inteiro_alterar, inteiro_imprimir, inteiro_novo);
+    Pilha *pilha_inteiro = pilha_criar(
+        inteiro_liberar,
+        inteiro_comparar,
+        inteiro_alterar,
+        inteiro_imprimir,
+        inteiro_novo);
 
     int aux;
     aux = 10;

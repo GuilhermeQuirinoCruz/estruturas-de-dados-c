@@ -4,10 +4,10 @@
 
 void testa_hashtable_inteiro()
 {
-    // for (int i = 0; i < 150; i++)
-    // {
-    //     printf("i: %d, hash:%d\n", i, hash_chave(&i, sizeof(int), 100));
-    // }
+    for (int i = 0; i < 150; i++)
+    {
+        printf("i: %d, hash:%d\n", i, hash_chave(&i, sizeof(int), 100));
+    }
 
     printf("\n- Testando hashtable de inteiros -\n");
     printf("Criando nova hashtable e inserindo itens:\n");

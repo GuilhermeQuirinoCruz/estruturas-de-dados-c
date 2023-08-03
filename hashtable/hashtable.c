@@ -5,18 +5,24 @@
 // funções hash: https://stackoverflow.com/questions/14409466/simple-hash-functions
 int hash_chave(void *chave, int bytes_chave, int maximo)
 {
+    if (chave == NULL || bytes_chave <= 0 || maximo <= 0)
+        return -1;
+    
     unsigned char *bytes = (unsigned char *)chave;
 
-    int hash = 0;
+    int hash = 1 + bytes[0];
     for (int i = 0; i < bytes_chave; i++)
-        // hash = bytes[i] + (hash << 6) + (hash << 16) - hash;
-        hash = ((hash << 5) + hash) + bytes[i];
+        hash = bytes[i] + (hash << 6) + (hash << 16) - hash;
+        // hash = ((hash << 5) + hash) + bytes[i];
 
     return abs(hash) % maximo;
 }
 
 HashtableItem *hashtable_item_novo(void *chave, void *dados)
 {
+    if (chave == NULL || dados == NULL)
+        return NULL;
+
     HashtableItem *item = (HashtableItem *)malloc(sizeof(HashtableItem));
     item->chave = chave;
     item->dados = dados;
@@ -27,11 +33,17 @@ HashtableItem *hashtable_item_novo(void *chave, void *dados)
 
 void hashtable_item_excluir(HashtableItem *item)
 {
+    if (item == NULL)
+        return;
+    
     free(item);
 }
 
 void hashtable_item_remover(Hashtable *hashtable, HashtableItem *item)
 {
+    if (hashtable == NULL || item == NULL)
+        return;
+    
     hashtable->liberar_chave(item->chave);
     hashtable->liberar_dados(item->dados);
     hashtable_item_excluir(item);
@@ -70,6 +82,9 @@ Hashtable *hashtable_criar(
 
 void hashtable_bucket_limpar(Hashtable *hashtable, HashtableBucket *bucket)
 {
+    if (hashtable == NULL || bucket == NULL)
+        return;
+    
     HashtableItem *item = bucket->primeiro_item;
     while (item != NULL)
     {
@@ -84,12 +99,18 @@ void hashtable_bucket_limpar(Hashtable *hashtable, HashtableBucket *bucket)
 
 void hashtable_limpar(Hashtable *hashtable)
 {
+    if (hashtable == NULL)
+        return;
+    
     for (int i = 0; i < hashtable->capacidade; i++)
         hashtable_bucket_limpar(hashtable, &(hashtable->buckets[i]));
 }
 
 void hashtable_excluir(Hashtable *hashtable)
 {
+    if (hashtable == NULL)
+        return;
+    
     hashtable_limpar(hashtable);
     free(hashtable->buckets);
     free(hashtable);
@@ -97,6 +118,9 @@ void hashtable_excluir(Hashtable *hashtable)
 
 HashtableItem *hashtable_bucket_get(Hashtable *hashtable, HashtableBucket *bucket, void *chave)
 {
+    if (hashtable == NULL || bucket == NULL || chave == NULL)
+        return NULL;
+    
     HashtableItem *item = bucket->primeiro_item;
     while (item != NULL)
     {
@@ -111,6 +135,9 @@ HashtableItem *hashtable_bucket_get(Hashtable *hashtable, HashtableBucket *bucke
 
 void hashtable_bucket_adicionar(Hashtable *hashtable, HashtableBucket *bucket, void *chave, void *dados)
 {
+    if (hashtable == NULL || bucket == NULL || chave == NULL || dados == NULL)
+        return;
+    
     HashtableItem *item = hashtable_bucket_get(hashtable, bucket, chave);
     if (item != NULL)
     {
@@ -127,18 +154,27 @@ void hashtable_bucket_adicionar(Hashtable *hashtable, HashtableBucket *bucket, v
 
 void hashtable_set(Hashtable *hashtable, void *chave, void *dados)
 {
+    if (hashtable == NULL || chave == NULL || dados == NULL)
+        return;
+    
     int hash = hash_chave(chave, hashtable->tamanho_chave, hashtable->capacidade);
     hashtable_bucket_adicionar(hashtable, &(hashtable->buckets[hash]), chave, dados);
 }
 
 void *hashtable_get(Hashtable *hashtable, void *chave)
 {
+    if (hashtable == NULL || chave == NULL)
+        return NULL;
+    
     int hash = hash_chave(chave, hashtable->tamanho_chave, hashtable->capacidade);
     return hashtable_bucket_get(hashtable, &(hashtable->buckets[hash]), chave);
 }
 
 void hashtable_remover(Hashtable *hashtable, void *chave)
 {
+    if (hashtable == NULL || chave == NULL)
+        return;
+    
     int hash = hash_chave(chave, hashtable->tamanho_chave, hashtable->capacidade);
     HashtableBucket *bucket = &(hashtable->buckets[hash]);
     HashtableItem *item = bucket->primeiro_item;
@@ -167,6 +203,9 @@ void hashtable_remover(Hashtable *hashtable, void *chave)
 
 void hashtable_imprimir(Hashtable *hashtable)
 {
+    if (hashtable == NULL)
+        return;
+    
     printf("- IMPRIMINDO HASHTABLE -\n");
     printf("Capacidade: %d\n", hashtable->capacidade);
 
@@ -188,6 +227,9 @@ void hashtable_imprimir(Hashtable *hashtable)
 
 void hashtable_imprimir_item(Hashtable *hashtable, HashtableItem *item)
 {
+    if (hashtable == NULL || item == NULL)
+        return;
+    
     printf("- Chave: ");
     hashtable->imprimir_chave(item->chave);
 

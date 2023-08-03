@@ -28,7 +28,6 @@ void testa_fila_inteiro()
 
     printf("\nInvertendo fila:\n");
     fila_inverter(fila_inteiro);
-    printf("\n");
     fila_imprimir(fila_inteiro);
 
     printf("\nRetirando um item:\n");

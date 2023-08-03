@@ -14,6 +14,9 @@ DequeItem *deque_item_novo(void *dados)
 
 void deque_item_alterar(Deque *deque, void *dados_antigos, void *dados_novos)
 {
+    if (deque == NULL)
+        return;
+    
     DequeItem *item = deque->primeiro_item;
     while (item != NULL)
     {
@@ -30,11 +33,15 @@ void deque_item_alterar(Deque *deque, void *dados_antigos, void *dados_novos)
 
 void deque_item_excluir(DequeItem *item)
 {
-    free(item);
+    if (item != NULL)
+        free(item);
 }
 
 void deque_item_remover(Deque *deque, DequeItem *item)
 {
+    if (deque == NULL || item == NULL)
+        return;
+    
     deque->liberar_dados(item->dados);
     deque->tamanho--;
     deque_item_excluir(item);
@@ -64,6 +71,9 @@ Deque *deque_criar(
 
 void deque_limpar(Deque *deque)
 {
+    if (deque == NULL)
+        return;
+    
     DequeItem *item = deque->primeiro_item;
 
     while (item != NULL)
@@ -76,12 +86,18 @@ void deque_limpar(Deque *deque)
 
 void deque_excluir(Deque *deque)
 {
+    if (deque == NULL)
+        return;
+    
     deque_limpar(deque);
     free(deque);
 }
 
 void deque_inserir_inicio(Deque *deque, void *dados)
 {
+    if (deque == NULL)
+        return;
+    
     DequeItem *item = deque_item_novo(deque->inserir_dados(dados));
     item->proximo = deque->primeiro_item;
 
@@ -97,6 +113,9 @@ void deque_inserir_inicio(Deque *deque, void *dados)
 
 void deque_inserir_fim(Deque *deque, void *dados)
 {
+    if (deque == NULL)
+        return;
+    
     DequeItem *item = deque_item_novo(deque->inserir_dados(dados));
     item->anterior = deque->ultimo_item;
 
@@ -112,6 +131,9 @@ void deque_inserir_fim(Deque *deque, void *dados)
 
 void deque_remover_por_dados(Deque *deque, void *dados)
 {
+    if (deque == NULL)
+        return;
+    
     DequeItem *item = deque->primeiro_item;
     while (item != NULL)
     {
@@ -138,6 +160,9 @@ void deque_remover_por_dados(Deque *deque, void *dados)
 
 void deque_imprimir(Deque *deque)
 {
+    if (deque == NULL)
+        return;
+    
     printf("- IMPRIMINDO DEQUE -\n");
     printf("Tamanho: %d\n", deque->tamanho);
 
@@ -152,6 +177,9 @@ void deque_imprimir(Deque *deque)
 
 void deque_imprimir_invertido(Deque *deque)
 {
+    if (deque == NULL)
+        return;
+    
     printf("- IMPRIMINDO DEQUE(INVERTIDO) -\n");
     printf("Tamanho: %d\n", deque->tamanho);
 

@@ -9,11 +9,15 @@ FilaItem *fila_item_novo(void *dados)
 
 void fila_item_excluir(FilaItem *item)
 {
-    free(item);
+    if (item != NULL)
+        free(item);
 }
 
 void fila_item_remover(Fila *fila, FilaItem *item)
 {
+    if (fila == NULL || item == NULL)
+        return;
+
     fila->liberar_dados(item->dados);
     fila_item_excluir(item);
 }
@@ -42,6 +46,9 @@ Fila *fila_criar(
 
 void fila_item_adicionar(Fila *fila, FilaItem *item)
 {
+    if (fila == NULL || item == NULL)
+        return;
+    
     item->anterior = NULL;
 
     if (fila->tamanho == 0)
@@ -56,12 +63,18 @@ void fila_item_adicionar(Fila *fila, FilaItem *item)
 
 void fila_adicionar(Fila *fila, void *dados)
 {
+    if (fila == NULL)
+        return;
+    
     FilaItem *item = fila_item_novo(fila->inserir_dados(dados));
     fila_item_adicionar(fila, item);
 }
 
 FilaItem *fila_remover(Fila *fila)
 {
+    if (fila == NULL)
+        return NULL;
+    
     FilaItem *item = fila->primeiro_item;
 
     if (fila->tamanho > 0)
@@ -79,6 +92,9 @@ FilaItem *fila_remover(Fila *fila)
 
 void fila_limpar(Fila *fila)
 {
+    if (fila == NULL)
+        return;
+    
     FilaItem *item = fila->primeiro_item;
 
     while (fila->primeiro_item != NULL)
@@ -89,6 +105,9 @@ void fila_limpar(Fila *fila)
 
 void fila_excluir(Fila *fila)
 {
+    if (fila == NULL)
+        return;
+    
     fila_limpar(fila);
     free(fila);
 }
@@ -104,6 +123,9 @@ void fila_item_inverter(FilaItem *item, FilaItem *anterior)
 
 void fila_inverter(Fila *fila)
 {
+    if (fila == NULL)
+        return;
+    
     fila_item_inverter(fila->primeiro_item, NULL);
 
     // FilaItem *primeiro_item = fila->primeiro_item;
@@ -117,6 +139,9 @@ void fila_inverter(Fila *fila)
 
 void fila_imprimir(Fila *fila)
 {
+    if (fila == NULL)
+        return;
+    
     printf("- IMPRIMINDO FILA -\n");
     printf("Tamanho: %d\n", fila->tamanho);
 

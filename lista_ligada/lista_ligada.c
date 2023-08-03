@@ -2,19 +2,19 @@
 #include <stdlib.h>
 #include "lista_ligada.h"
 
-ListaItem *lista_item_novo(void *dados)
+ListaLigadaItem *lista_ligada_item_novo(void *dados)
 {
-    ListaItem *item = (ListaItem *)malloc(sizeof(ListaItem));
+    ListaLigadaItem *item = (ListaLigadaItem *)malloc(sizeof(ListaLigadaItem));
     item->dados = dados;
     item->proximo = NULL;
 }
 
-void lista_item_alterar_dados(Lista *lista, void *dados_antigos, void *dados_novos)
+void lista_ligada_item_alterar_dados(ListaLigada *lista, void *dados_antigos, void *dados_novos)
 {
     if (lista == NULL || dados_antigos == NULL || dados_novos == NULL)
         return;
 
-    ListaItem *item = lista->primeiro_item;
+    ListaLigadaItem *item = lista->primeiro_item;
     while (item != NULL)
     {
         if (lista->comparar_dados(item->dados, dados_antigos) == 0)
@@ -27,50 +27,50 @@ void lista_item_alterar_dados(Lista *lista, void *dados_antigos, void *dados_nov
     }
 }
 
-void lista_item_excluir(ListaItem *item)
+void lista_ligada_item_excluir(ListaLigadaItem *item)
 {
     free(item);
 }
 
-void lista_item_remover(Lista *lista, ListaItem *item)
+void lista_ligada_item_remover(ListaLigada *lista, ListaLigadaItem *item)
 {
     lista->liberar_dados(item->dados);
     lista->tamanho--;
-    lista_item_excluir(item);
+    lista_ligada_item_excluir(item);
 }
 
-ListaItem *lista_item_remover_por_dados(Lista *lista, ListaItem *item, void *dados)
+ListaLigadaItem *lista_ligada_item_remover_por_dados(ListaLigada *lista, ListaLigadaItem *item, void *dados)
 {
     if (item == NULL || dados == NULL)
         return NULL;
 
     if (lista->comparar_dados(item->dados, dados) == 0)
     {
-        ListaItem *proximo = item->proximo;
-        lista_item_remover(lista, item);
+        ListaLigadaItem *proximo = item->proximo;
+        lista_ligada_item_remover(lista, item);
         return proximo;
     }
 
-    item->proximo = lista_item_remover_por_dados(lista, item->proximo, dados);
+    item->proximo = lista_ligada_item_remover_por_dados(lista, item->proximo, dados);
     return item;
 }
 
-void lista_remover_por_dados(Lista *lista, void *dados)
+void lista_ligada_remover_por_dados(ListaLigada *lista, void *dados)
 {
     if (lista == NULL || dados == NULL)
         return;
 
-    lista->primeiro_item = lista_item_remover_por_dados(lista, lista->primeiro_item, dados);
+    lista->primeiro_item = lista_ligada_item_remover_por_dados(lista, lista->primeiro_item, dados);
 }
 
-Lista *lista_criar(
+ListaLigada *lista_ligada_criar(
     void (*liberar_dados)(void *),
     int (*comparar_dados)(void *, void *),
     void (*alterar_dados)(void *, void *),
     void (*imprimir_dados)(void *),
     void *(*inserir_dados)(void *))
 {
-    Lista *lista = (Lista *)malloc(sizeof(Lista));
+    ListaLigada *lista = (ListaLigada *)malloc(sizeof(ListaLigada));
 
     lista->tamanho = 0;
     lista->primeiro_item = NULL;
@@ -84,36 +84,36 @@ Lista *lista_criar(
     return lista;
 }
 
-void lista_limpar(Lista *lista)
+void lista_ligada_limpar(ListaLigada *lista)
 {
     if (lista == NULL)
         return;
 
     while (lista->primeiro_item != NULL)
     {
-        ListaItem *item = lista->primeiro_item;
+        ListaLigadaItem *item = lista->primeiro_item;
         lista->primeiro_item = item->proximo;
 
-        lista_item_remover(lista, item);
+        lista_ligada_item_remover(lista, item);
         item = lista->primeiro_item;
     }
 }
 
-void lista_excluir(Lista *lista)
+void lista_ligada_excluir(ListaLigada *lista)
 {
     if (lista == NULL)
         return;
 
-    lista_limpar(lista);
+    lista_ligada_limpar(lista);
     free(lista);
 }
 
-ListaItem *lista_ultimo_item(Lista *lista)
+ListaLigadaItem *lista_ligada_ultimo_item(ListaLigada *lista)
 {
     if (lista == NULL)
         return NULL;
 
-    ListaItem *item = lista->primeiro_item;
+    ListaLigadaItem *item = lista->primeiro_item;
     while (item->proximo != NULL)
     {
         item = item->proximo;
@@ -122,29 +122,29 @@ ListaItem *lista_ultimo_item(Lista *lista)
     return item;
 }
 
-void lista_item_inserir(Lista *lista, void *dados)
+void lista_ligada_item_inserir(ListaLigada *lista, void *dados)
 {
     if (lista == NULL || dados == NULL)
         return;
 
-    ListaItem *item = lista_item_novo(lista->inserir_dados(dados));
+    ListaLigadaItem *item = lista_ligada_item_novo(lista->inserir_dados(dados));
 
     if (lista->primeiro_item == NULL)
         lista->primeiro_item = item;
     else
-        lista_ultimo_item(lista)->proximo = item;
+        lista_ligada_ultimo_item(lista)->proximo = item;
 
     lista->tamanho++;
 }
 
-int lista_item_posicao(Lista *lista, void *dados)
+int lista_ligada_item_posicao(ListaLigada *lista, void *dados)
 {
     if (lista == NULL || dados == NULL)
         return -1;
 
     int posicao = -1;
     int posicao_atual = 0;
-    ListaItem *item = lista->primeiro_item;
+    ListaLigadaItem *item = lista->primeiro_item;
     while (item != NULL)
     {
         if (lista->comparar_dados(item->dados, dados) == 0)
@@ -160,7 +160,7 @@ int lista_item_posicao(Lista *lista, void *dados)
     return posicao;
 }
 
-ListaItem *lista_item_na_posicao(Lista *lista, int posicao)
+ListaLigadaItem *lista_ligada_item_na_posicao(ListaLigada *lista, int posicao)
 {
     if (lista == NULL)
         return NULL;
@@ -168,7 +168,7 @@ ListaItem *lista_item_na_posicao(Lista *lista, int posicao)
     if (posicao >= lista->tamanho || posicao < 0)
         return NULL;
 
-    ListaItem *item = lista->primeiro_item;
+    ListaLigadaItem *item = lista->primeiro_item;
     while (posicao > 0)
     {
         posicao--;
@@ -178,33 +178,33 @@ ListaItem *lista_item_na_posicao(Lista *lista, int posicao)
     return item;
 }
 
-Lista *lista_clonar(Lista *lista)
+ListaLigada *lista_ligada_clonar(ListaLigada *lista)
 {
     if (lista == NULL)
         return NULL;
     
-    Lista *nova = lista_criar(
+    ListaLigada *nova = lista_ligada_criar(
         lista->liberar_dados,
         lista->comparar_dados,
         lista->alterar_dados,
         lista->imprimir_dados,
         lista->inserir_dados);
 
-    ListaItem *item = lista->primeiro_item;
+    ListaLigadaItem *item = lista->primeiro_item;
     while (item != NULL)
     {
-        lista_item_inserir(nova, item->dados);
+        lista_ligada_item_inserir(nova, item->dados);
         item = item->proximo;
     }
 
     return nova;
 }
 
-void lista_imprimir(Lista *lista)
+void lista_ligada_imprimir(ListaLigada *lista)
 {
     if (lista == NULL)
     {
-        printf("Lista nula\n");
+        printf("ListaLigada nula\n");
         return;
     }
 
@@ -212,7 +212,7 @@ void lista_imprimir(Lista *lista)
     printf("Tamanho: %d\n", lista->tamanho);
 
     int indice_item = 0;
-    ListaItem *item = lista->primeiro_item;
+    ListaLigadaItem *item = lista->primeiro_item;
     while (item != NULL)
     {
         printf("Item [%d]: ", indice_item);
@@ -224,7 +224,7 @@ void lista_imprimir(Lista *lista)
     }
 }
 
-int lista_comparar(Lista *lista1, Lista *lista2)
+int lista_ligada_comparar(ListaLigada *lista1, ListaLigada *lista2)
 {
     if (lista1 == NULL || lista2 == NULL)
         return -2;
@@ -234,8 +234,8 @@ int lista_comparar(Lista *lista1, Lista *lista2)
     if (lista2->tamanho < lista1->tamanho)
         return 1;
 
-    ListaItem *item1 = lista1->primeiro_item;
-    ListaItem *item2 = lista2->primeiro_item;
+    ListaLigadaItem *item1 = lista1->primeiro_item;
+    ListaLigadaItem *item2 = lista2->primeiro_item;
 
     while (item1 != NULL && item2 != NULL)
     {
@@ -247,26 +247,26 @@ int lista_comparar(Lista *lista1, Lista *lista2)
     return 0;
 }
 
-void lista_inverter_itens(ListaItem *atual, ListaItem *proximo)
+void lista_ligada_inverter_itens(ListaLigadaItem *atual, ListaLigadaItem *proximo)
 {
     if (atual == NULL)
         return;
 
-    lista_inverter_itens(atual->proximo, atual);
+    lista_ligada_inverter_itens(atual->proximo, atual);
     atual->proximo = proximo;
 }
 
-void lista_inverter(Lista *lista)
+void lista_ligada_inverter(ListaLigada *lista)
 {
     if (lista == NULL)
         return;
 
-    ListaItem *primeiro_item = lista->primeiro_item;
-    lista->primeiro_item = lista_ultimo_item(lista);
-    lista_inverter_itens(primeiro_item, NULL);
+    ListaLigadaItem *primeiro_item = lista->primeiro_item;
+    lista->primeiro_item = lista_ligada_ultimo_item(lista);
+    lista_ligada_inverter_itens(primeiro_item, NULL);
 }
 
-void lista_trocar_itens(ListaItem *item1, ListaItem *item2)
+void lista_ligada_trocar_itens(ListaLigadaItem *item1, ListaLigadaItem *item2)
 {
     if (item1 == NULL || item2 == NULL)
         return;
@@ -276,12 +276,12 @@ void lista_trocar_itens(ListaItem *item1, ListaItem *item2)
     item2->dados = troca;
 }
 
-void lista_ordenar(Lista *lista)
+void lista_ligada_ordenar(ListaLigada *lista)
 {
     if (lista == NULL || lista->primeiro_item == NULL || lista->primeiro_item->proximo == NULL)
         return;
 
-    ListaItem *atual = NULL;
+    ListaLigadaItem *atual = NULL;
     int ordenada = 0;
     int limite = lista->tamanho - 1;
     int comparacoes = 0;
@@ -293,7 +293,7 @@ void lista_ordenar(Lista *lista)
         {
             if (lista->comparar_dados(atual->dados, atual->proximo->dados) > 0)
             {
-                lista_trocar_itens(atual, atual->proximo);
+                lista_ligada_trocar_itens(atual, atual->proximo);
                 ordenada = 0;
             }
 

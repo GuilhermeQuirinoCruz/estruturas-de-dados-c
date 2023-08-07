@@ -5,41 +5,41 @@ struct _item
     void *dados;
     struct _item *proximo;
 };
-typedef struct _item ListaItem;
+typedef struct _item ListaLigadaItem;
 
 typedef struct
 {
     unsigned int tamanho;
-    ListaItem *primeiro_item;
+    ListaLigadaItem *primeiro_item;
     void (*liberar_dados)(void *);
     int (*comparar_dados)(void *, void *);
     void (*alterar_dados)(void *, void *);
     void (*imprimir_dados)(void *);
     void *(*inserir_dados)(void *);
-} Lista;
+} ListaLigada;
 
-ListaItem *lista_item_novo(void *dados);
-void lista_item_alterar_dados(Lista *lista, void *dados_antigos, void *dados_novos);
-void lista_item_excluir(ListaItem *item);
-void lista_item_remover(Lista *lista, ListaItem *item);
-ListaItem *lista_item_remover_por_dados(Lista *lista, ListaItem *item, void *dados);
-void lista_remover_por_dados(Lista *lista, void *dados);
-Lista *lista_criar(
+ListaLigadaItem *lista_ligada_item_novo(void *dados);
+void lista_ligada_item_alterar_dados(ListaLigada *lista, void *dados_antigos, void *dados_novos);
+void lista_ligada_item_excluir(ListaLigadaItem *item);
+void lista_ligada_item_remover(ListaLigada *lista, ListaLigadaItem *item);
+ListaLigadaItem *lista_ligada_item_remover_por_dados(ListaLigada *lista, ListaLigadaItem *item, void *dados);
+void lista_ligada_remover_por_dados(ListaLigada *lista, void *dados);
+ListaLigada *lista_ligada_criar(
     void (*liberar_dados)(void *),
     int (*comparar_dados)(void *, void *),
     void (*alterar_dados)(void *, void *),
     void (*imprimir_dados)(void *),
     void *(*inserir_dados)(void *));
-void lista_limpar(Lista *lista);
-void lista_excluir(Lista *lista);
-ListaItem *lista_ultimo_item(Lista *lista);
-void lista_item_inserir(Lista *lista, void *dados);
-int lista_item_posicao(Lista *lista, void *dados);
-ListaItem *lista_item_na_posicao(Lista *lista, int posicao);
-Lista *lista_clonar(Lista *lista);
-void lista_imprimir(Lista *lista);
-int lista_comparar(Lista *lista1, Lista *lista2);
-void lista_itens_inverter(ListaItem *atual, ListaItem *proximo);
-void lista_inverter(Lista *lista);
-void lista_trocar_itens(ListaItem *item1, ListaItem *item2);
-void lista_ordenar(Lista *lista);
+void lista_ligada_limpar(ListaLigada *lista);
+void lista_ligada_excluir(ListaLigada *lista);
+ListaLigadaItem *lista_ligada_ultimo_item(ListaLigada *lista);
+void lista_ligada_item_inserir(ListaLigada *lista, void *dados);
+int lista_ligada_item_posicao(ListaLigada *lista, void *dados);
+ListaLigadaItem *lista_ligada_item_na_posicao(ListaLigada *lista, int posicao);
+ListaLigada *lista_ligada_clonar(ListaLigada *lista);
+void lista_ligada_imprimir(ListaLigada *lista);
+int lista_ligada_comparar(ListaLigada *lista1, ListaLigada *lista2);
+void lista_ligada_itens_inverter(ListaLigadaItem *atual, ListaLigadaItem *proximo);
+void lista_ligada_inverter(ListaLigada *lista);
+void lista_ligada_trocar_itens(ListaLigadaItem *item1, ListaLigadaItem *item2);
+void lista_ligada_ordenar(ListaLigada *lista);

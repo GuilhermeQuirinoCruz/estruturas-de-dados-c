@@ -15,11 +15,15 @@ ArvoreBinariaNo *arvore_binaria_no_novo(void *dados)
 
 void arvore_binaria_no_excluir(ArvoreBinariaNo *no)
 {
-    free(no);
+    if (no != NULL)
+        free(no);
 }
 
 void arvore_binaria_no_remover(ArvoreBinaria *arvore, ArvoreBinariaNo *no)
 {
+    if (arvore == NULL || no == NULL)
+        return;
+    
     arvore->liberar_dados(no->dados);
     arvore_binaria_no_excluir(no);
 }
@@ -81,7 +85,7 @@ ArvoreBinaria *arvore_binaria_criar(
 
 void arvore_binaria_no_limpar(ArvoreBinaria *arvore, ArvoreBinariaNo *no)
 {
-    if (no == NULL)
+    if (arvore == NULL || no == NULL)
         return;
     
     if (no->esquerda != NULL)
@@ -94,17 +98,26 @@ void arvore_binaria_no_limpar(ArvoreBinaria *arvore, ArvoreBinariaNo *no)
 
 void arvore_binaria_limpar(ArvoreBinaria *arvore)
 {
+    if (arvore == NULL)
+        return;
+    
     arvore_binaria_no_limpar(arvore, arvore->raiz);
 }
 
 void arvore_binaria_excluir(ArvoreBinaria *arvore)
 {
+    if (arvore == NULL)
+        return;
+    
     arvore_binaria_limpar(arvore);
     free(arvore);
 }
 
 void arvore_binaria_calcular_altura(ArvoreBinaria *arvore)
 {
+    if (arvore == NULL)
+        return;
+    
     arvore->altura = arvore_binaria_no_maior_altura(arvore->raiz);
 }
 
@@ -112,6 +125,9 @@ ArvoreBinariaNo *arvore_binaria_inserir_no(ArvoreBinaria *arvore, ArvoreBinariaN
 {
     if (pai == NULL)
         return filho;
+    
+    if (arvore == NULL || filho == NULL)
+        return NULL;
     
     filho->altura++;
     if (filho->altura > arvore->altura)
@@ -129,6 +145,9 @@ ArvoreBinariaNo *arvore_binaria_inserir_no(ArvoreBinaria *arvore, ArvoreBinariaN
 
 void arvore_binaria_inserir(ArvoreBinaria *arvore, void *dados)
 {
+    if (arvore == NULL)
+        return;
+    
     ArvoreBinariaNo *no = arvore_binaria_no_novo(arvore->inserir_dados(dados));
 
     arvore->raiz = arvore_binaria_inserir_no(arvore, arvore->raiz, no);
@@ -137,6 +156,9 @@ void arvore_binaria_inserir(ArvoreBinaria *arvore, void *dados)
 
 void arvore_binaria_remover(ArvoreBinaria *arvore, void *dados)
 {
+    if (arvore == NULL)
+        return;
+    
     ArvoreBinariaNo *pai = NULL;
     ArvoreBinariaNo *filho = arvore->raiz;
     int comparacao = arvore->comparar_dados(filho->dados, dados);
@@ -182,6 +204,9 @@ void arvore_binaria_remover(ArvoreBinaria *arvore, void *dados)
 
 void arvore_binaria_imprimir_no(ArvoreBinaria *arvore, ArvoreBinariaNo *no)
 {
+    if (arvore == NULL || no == NULL)
+        return;
+    
     printf("[%d] : ", no->altura);
     arvore->imprimir_dados(no->dados);
     printf("\n");
@@ -189,7 +214,7 @@ void arvore_binaria_imprimir_no(ArvoreBinaria *arvore, ArvoreBinariaNo *no)
 
 void arvore_binaria_imprimir_no_ordem(ArvoreBinaria *arvore, ArvoreBinariaNo *no)
 {
-    if (no == NULL)
+    if (arvore == NULL || no == NULL)
         return;
     
     arvore_binaria_imprimir_no_ordem(arvore, no->esquerda);
@@ -199,7 +224,7 @@ void arvore_binaria_imprimir_no_ordem(ArvoreBinaria *arvore, ArvoreBinariaNo *no
 
 void arvore_binaria_imprimir_no_pos_ordem(ArvoreBinaria *arvore, ArvoreBinariaNo *no)
 {
-    if (no == NULL)
+    if (arvore == NULL || no == NULL)
         return;
     
     arvore_binaria_imprimir_no_ordem(arvore, no->esquerda);
@@ -209,7 +234,7 @@ void arvore_binaria_imprimir_no_pos_ordem(ArvoreBinaria *arvore, ArvoreBinariaNo
 
 void arvore_binaria_imprimir_no_pre_ordem(ArvoreBinaria *arvore, ArvoreBinariaNo *no)
 {
-    if (no == NULL)
+    if (arvore == NULL || no == NULL)
         return;
     
     arvore_binaria_imprimir_no(arvore, no);
@@ -219,7 +244,10 @@ void arvore_binaria_imprimir_no_pre_ordem(ArvoreBinaria *arvore, ArvoreBinariaNo
 
 void arvore_binaria_imprimir(ArvoreBinaria *arvore, ArvoreBinariaImpressao ordem)
 {
-    printf("- IMPRIMINDO ÁRVORE -\n");
+    if (arvore == NULL)
+        return;
+    
+    printf("- IMPRIMINDO ÁRVORE BINÁRIA -\n");
     printf("Altura: %d\n", arvore->altura);
     printf("Quantidade de nós: %d\n", arvore->qtd_nos);
 
@@ -235,6 +263,7 @@ void arvore_binaria_imprimir(ArvoreBinaria *arvore, ArvoreBinariaImpressao ordem
             arvore_binaria_imprimir_no_pre_ordem(arvore, arvore->raiz);
             break;
         default:
+            printf("Ordem não suportada\n");
             break;
     }
 }

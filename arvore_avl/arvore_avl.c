@@ -40,7 +40,6 @@ ArvoreAVL *arvore_avl_criar(
     arvore->imprimir_dados = imprimir_dados;
     arvore->inserir_dados = inserir_dados;
     arvore->raiz = NULL;
-    arvore->qtd_nos = 0;
 
     return arvore;
 }
@@ -52,12 +51,12 @@ void arvore_avl_no_limpar(ArvoreAVL *arvore, ArvoreAVLNo *no)
     if (no->direita != NULL)
         arvore_avl_no_limpar(arvore, no->direita);
     
-    arvore_avl_no_excluir(no);
+    arvore_avl_no_remover(arvore, no);
 }
 
 void arvore_avl_limpar(ArvoreAVL *arvore)
 {
-    arvore_avl_no_remover(arvore, arvore->raiz);
+    arvore_avl_no_limpar(arvore, arvore->raiz);
 }
 
 void arvore_avl_excluir(ArvoreAVL *arvore)
@@ -66,28 +65,44 @@ void arvore_avl_excluir(ArvoreAVL *arvore)
     free(arvore);
 }
 
+ArvoreAVLNo *arvore_avl_inserir_no(ArvoreAVL *arvore, ArvoreAVLNo *pai, void *dados)
+{
+    if (pai == NULL)
+        return arvore_avl_no_novo(arvore->inserir_dados(dados));
+    
+    int comparacao = arvore->comparar_dados(pai->dados, dados);
+    if (comparacao > 0)
+        pai->esquerda = arvore_avl_inserir_no(arvore, pai->esquerda, dados);
+    else if (comparacao < 0)
+        pai->direita = arvore_avl_inserir_no(arvore, pai->direita, dados);
+    else
+        pai->quantidade++;
+    
+    return pai;
+}
+
 void arvore_avl_inserir(ArvoreAVL *arvore, void *dados)
 {
-    ArvoreAVLNo *pai = arvore->raiz;
-    int comparacao = 0;
-    while (pai != NULL)
-    {
-        comparacao = arvore->comparar_dados(pai->dados, dados);
-        if (comparacao > 0)
-        {
-            // esquerda
-            
-        }
-        else if (comparacao < 0)
-        {
-            // direita
-        }
-        else
-        {
-            pai->quantidade++;
-            return;
-        }
-        
-    }
+    arvore->raiz = arvore_avl_inserir_no(arvore, arvore->raiz, dados);
+}
+
+void arvore_avl_imprimir_no(ArvoreAVL *arvore, ArvoreAVLNo *no)
+{
+    if (no == NULL)
+        return;
     
+    arvore_avl_imprimir_no(arvore, no->esquerda);
+
+    arvore->imprimir_dados(no->dados);
+    printf(" (%d)\n", no->quantidade);
+
+    arvore_avl_imprimir_no(arvore, no->direita);
+}
+
+void arvore_avl_imprimir(ArvoreAVL *arvore)
+{
+    printf("- IMPRIMINDO ÁRVORE AVL -\n");
+    printf("Quantidade de nós: %d\n", 0);
+
+    arvore_avl_imprimir_no(arvore, arvore->raiz);
 }

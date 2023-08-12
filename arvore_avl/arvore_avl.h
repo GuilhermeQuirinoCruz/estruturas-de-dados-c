@@ -14,7 +14,6 @@ typedef struct _no ArvoreAVLNo;
 typedef struct
 {
     ArvoreAVLNo *raiz;
-    unsigned int qtd_nos;
     void (*liberar_dados)(void *);
     int (*comparar_dados)(void *, void *);
     void (*imprimir_dados)(void *);
@@ -32,3 +31,7 @@ ArvoreAVL *arvore_avl_criar(
 void arvore_avl_no_limpar(ArvoreAVL *arvore, ArvoreAVLNo *no);
 void arvore_avl_limpar(ArvoreAVL *arvore);
 void arvore_avl_excluir(ArvoreAVL *arvore);
+ArvoreAVLNo *arvore_avl_inserir_no(ArvoreAVL *arvore, ArvoreAVLNo *pai, void *dados);
+void arvore_avl_inserir(ArvoreAVL *arvore, void *dados);
+void arvore_avl_imprimir_no(ArvoreAVL *arvore, ArvoreAVLNo *no);
+void arvore_avl_imprimir(ArvoreAVL *arvore);

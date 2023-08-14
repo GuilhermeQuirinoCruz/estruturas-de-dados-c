@@ -14,11 +14,17 @@ void testa_arvore_avl_inteiro()
         inteiro_novo);
 
     int aux;
-    aux = 5;
-    arvore_avl_inserir(arvore_inteiro, &aux);
-    aux = 8;
+    aux = 6;
     arvore_avl_inserir(arvore_inteiro, &aux);
     aux = 3;
+    arvore_avl_inserir(arvore_inteiro, &aux);
+    aux = 5;
+    arvore_avl_inserir(arvore_inteiro, &aux);
+    aux = 2;
+    arvore_avl_inserir(arvore_inteiro, &aux);
+    aux = 4;
+    arvore_avl_inserir(arvore_inteiro, &aux);
+    aux = 1;
     arvore_avl_inserir(arvore_inteiro, &aux);
 
     arvore_avl_imprimir(arvore_inteiro);

@@ -65,19 +65,105 @@ void arvore_avl_excluir(ArvoreAVL *arvore)
     free(arvore);
 }
 
+int arvore_avl_calcular_altura_no(ArvoreAVLNo *no)
+{
+    if (no == NULL)
+        return 0;
+    
+    no->altura_esquerda = arvore_avl_calcular_altura_no(no->esquerda);
+    no->altura_direita = arvore_avl_calcular_altura_no(no->direita);
+
+    return (no->altura_esquerda > no->altura_direita ? no->altura_esquerda : no->altura_direita) + 1;
+}
+
+ArvoreAVLNo *arvore_avl_rotacao_esquerda(ArvoreAVLNo *no)
+{
+    ArvoreAVLNo *filho = no->direita;
+    no->direita = filho->esquerda;
+    filho->esquerda = no;
+
+    return filho;
+}
+
+ArvoreAVLNo *arvore_avl_rotacao_direita(ArvoreAVLNo *no)
+{
+    ArvoreAVLNo *filho = no->esquerda;
+    no->esquerda = filho->direita;
+    filho->direita = no;
+
+    return filho;
+}
+
+ArvoreAVLNo *arvore_avl_balancear_no(ArvoreAVLNo *no)
+{
+    int diferenca_altura = no->altura_direita - no->altura_esquerda;
+    int diferenca_altura_filho = 0;
+    if (diferenca_altura == 2)
+    {
+        diferenca_altura_filho = no->direita->altura_direita - no->direita->altura_esquerda;
+        if (diferenca_altura_filho == -1)
+        {
+            no->direita = arvore_avl_rotacao_direita(no->direita);
+            no = arvore_avl_rotacao_esquerda(no);
+        }
+        else
+        {
+            no = arvore_avl_rotacao_esquerda(no);
+        }
+    }
+    else if (diferenca_altura == -2)
+    {
+        diferenca_altura_filho = no->esquerda->altura_direita - no->esquerda->altura_esquerda;
+        if (diferenca_altura_filho == 1)
+        {
+            no->esquerda = arvore_avl_rotacao_esquerda(no->esquerda);
+            no = arvore_avl_rotacao_direita(no);
+        }
+        else
+        {
+            no = arvore_avl_rotacao_direita(no);
+        }
+    }
+
+    arvore_avl_calcular_altura_no(no);
+
+    return no;
+}
+
 ArvoreAVLNo *arvore_avl_inserir_no(ArvoreAVL *arvore, ArvoreAVLNo *pai, void *dados)
 {
     if (pai == NULL)
+    {
+        arvore->qtd_nos++;
+
         return arvore_avl_no_novo(arvore->inserir_dados(dados));
+    }
     
     int comparacao = arvore->comparar_dados(pai->dados, dados);
     if (comparacao > 0)
+    {
         pai->esquerda = arvore_avl_inserir_no(arvore, pai->esquerda, dados);
+        int maior_altura_esquerda = pai->esquerda->altura_esquerda;
+        if (pai->esquerda->altura_direita > maior_altura_esquerda)
+            maior_altura_esquerda = pai->esquerda->altura_direita;
+        
+        pai->altura_esquerda = maior_altura_esquerda + 1;
+    }
     else if (comparacao < 0)
+    {
         pai->direita = arvore_avl_inserir_no(arvore, pai->direita, dados);
+
+        int maior_altura_direita = pai->direita->altura_esquerda;
+        if (pai->direita->altura_direita > maior_altura_direita)
+            maior_altura_direita = pai->direita->altura_direita;
+        
+        pai->altura_direita = maior_altura_direita + 1;
+    }
     else
         pai->quantidade++;
     
+    pai = arvore_avl_balancear_no(pai);
+
     return pai;
 }
 
@@ -95,6 +181,8 @@ void arvore_avl_imprimir_no(ArvoreAVL *arvore, ArvoreAVLNo *no)
 
     arvore->imprimir_dados(no->dados);
     printf(" (%d)\n", no->quantidade);
+    printf(" >altura esquerda: %d\n", no->altura_esquerda);
+    printf(" >altura direita: %d\n", no->altura_direita);
 
     arvore_avl_imprimir_no(arvore, no->direita);
 }
@@ -102,7 +190,7 @@ void arvore_avl_imprimir_no(ArvoreAVL *arvore, ArvoreAVLNo *no)
 void arvore_avl_imprimir(ArvoreAVL *arvore)
 {
     printf("- IMPRIMINDO ÁRVORE AVL -\n");
-    printf("Quantidade de nós: %d\n", 0);
+    printf("Quantidade de nós únicos: %d\n", arvore->qtd_nos);
 
     arvore_avl_imprimir_no(arvore, arvore->raiz);
 }

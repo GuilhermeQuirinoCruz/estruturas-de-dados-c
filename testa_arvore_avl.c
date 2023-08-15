@@ -16,6 +16,8 @@ void testa_arvore_avl_inteiro()
     int aux;
     aux = 6;
     arvore_avl_inserir(arvore_inteiro, &aux);
+    aux = 6;
+    arvore_avl_inserir(arvore_inteiro, &aux);
     aux = 3;
     arvore_avl_inserir(arvore_inteiro, &aux);
     aux = 5;
@@ -27,6 +29,22 @@ void testa_arvore_avl_inteiro()
     aux = 1;
     arvore_avl_inserir(arvore_inteiro, &aux);
 
+    arvore_avl_imprimir(arvore_inteiro);
+
+    aux = 4;
+    printf("\nRemovendo item [%d],\n", aux);
+    arvore_avl_remover(arvore_inteiro, &aux);
+    aux = 6;
+    printf("Removendo item [%d], que foi inserido duas vezes,\n", aux);
+    arvore_avl_remover(arvore_inteiro, &aux);
+    aux = 10;
+    printf("Removendo item [%d], que não está na árvore:\n", aux);
+    arvore_avl_remover(arvore_inteiro, &aux);
+    arvore_avl_imprimir(arvore_inteiro);
+
+    aux = 3;
+    printf("\nRemovendo item [%d], que é a raiz da árvore:\n", aux);
+    arvore_avl_remover(arvore_inteiro, &aux);
     arvore_avl_imprimir(arvore_inteiro);
     
     arvore_avl_excluir(arvore_inteiro);

@@ -32,11 +32,14 @@ ArvoreAVL *arvore_avl_criar(
 void arvore_avl_no_limpar(ArvoreAVL *arvore, ArvoreAVLNo *no);
 void arvore_avl_limpar(ArvoreAVL *arvore);
 void arvore_avl_excluir(ArvoreAVL *arvore);
+int arvore_avl_no_maior_altura(ArvoreAVLNo *no);
 int arvore_avl_calcular_altura_no(ArvoreAVLNo *no);
 ArvoreAVLNo *arvore_avl_rotacao_esquerda(ArvoreAVLNo *no);
 ArvoreAVLNo *arvore_avl_rotacao_direita(ArvoreAVLNo *no);
 ArvoreAVLNo *arvore_avl_balancear_no(ArvoreAVLNo *no);
 ArvoreAVLNo *arvore_avl_inserir_no(ArvoreAVL *arvore, ArvoreAVLNo *pai, void *dados);
 void arvore_avl_inserir(ArvoreAVL *arvore, void *dados);
+ArvoreAVLNo *arvore_avl_remover_no(ArvoreAVL *arvore, ArvoreAVLNo *pai, void *dados);
+void arvore_avl_remover(ArvoreAVL *arvore, void *dados);
 void arvore_avl_imprimir_no(ArvoreAVL *arvore, ArvoreAVLNo *no);
 void arvore_avl_imprimir(ArvoreAVL *arvore);

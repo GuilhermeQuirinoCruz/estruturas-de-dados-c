@@ -1,13 +1,14 @@
 #include <stdio.h>
-#include "hashtable/hashtable.h"
-#include "tipos/inteiro.h"
+#include "../hashtable/hashtable.h"
+#include "../tipos/inteiro.h"
 
 void testa_hashtable_inteiro()
 {
-    for (int i = 0; i < 150; i++)
-    {
-        printf("i: %d, hash:%d\n", i, hash_chave(&i, sizeof(int), 100));
-    }
+    // teste da função hash
+    // for (int i = 0; i < 150; i++)
+    // {
+    //     printf("i: %d, hash:%d\n", i, hash_chave(&i, sizeof(int), 100));
+    // }
 
     printf("\n- Testando hashtable de inteiros -\n");
     printf("Criando nova hashtable e inserindo itens:\n");
@@ -29,7 +30,7 @@ void testa_hashtable_inteiro()
     chave = 10;
     valor = 123;
     hashtable_set(hashtable_inteiro, &chave, &valor);
-    chave = 3;
+    chave = 100;
     valor = 14;
     hashtable_set(hashtable_inteiro, &chave, &valor);
     chave = 5;
@@ -41,7 +42,7 @@ void testa_hashtable_inteiro()
     chave = 0;
     valor = 61;
     hashtable_set(hashtable_inteiro, &chave, &valor);
-    chave = 100;
+    chave = 3;
     valor = 97;
     hashtable_set(hashtable_inteiro, &chave, &valor);
     hashtable_imprimir(hashtable_inteiro);
@@ -63,8 +64,8 @@ void testa_hashtable_inteiro()
     hashtable_imprimir_item(hashtable_inteiro, hashtable_get(hashtable_inteiro, &chave));
     printf("\n");
 
-    printf("\nRemovendo item:\n");
     chave = 3;
+    printf("\nRemovendo item com chave [%d]:\n", chave);
     hashtable_remover(hashtable_inteiro, &chave);
     hashtable_imprimir(hashtable_inteiro);
 
@@ -73,7 +74,7 @@ void testa_hashtable_inteiro()
 
 int main()
 {
-    // gcc -o testa_hashtable.out testa_hashtable.c hashtable/hashtable.c tipos/inteiro.c
+    // gcc -o testa_hashtable.out testa_hashtable.c ../hashtable/hashtable.c ../tipos/inteiro.c
     testa_hashtable_inteiro();
 
     return 0;

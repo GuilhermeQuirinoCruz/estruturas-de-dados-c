@@ -6,7 +6,7 @@
 int array_item_zero(Array *array, void *item)
 {
     if (array == NULL || item == NULL)
-        return;
+        return 0;
     
     char *cmp_zero = (char *)item;
     return cmp_zero[0] == 0 && !memcmp(cmp_zero, cmp_zero + 1, array->item_tamanho - 1);

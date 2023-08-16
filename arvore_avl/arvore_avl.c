@@ -202,7 +202,7 @@ void arvore_avl_inserir(ArvoreAVL *arvore, void *dados)
 ArvoreAVLNo *arvore_avl_remover_no(ArvoreAVL *arvore, ArvoreAVLNo *pai, void *dados)
 {
     if (arvore == NULL || pai == NULL)
-        return;
+        return NULL;
     
     int comparacao = arvore->comparar_dados(pai->dados, dados);
     if (comparacao > 0)

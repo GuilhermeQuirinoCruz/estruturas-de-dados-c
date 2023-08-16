@@ -44,6 +44,8 @@ void arvore_binaria_excluir(ArvoreBinaria *arvore);
 ArvoreBinariaNo *arvore_binaria_inserir_no(ArvoreBinaria *arvore, ArvoreBinariaNo *pai, ArvoreBinariaNo *filho);
 void arvore_binaria_inserir(ArvoreBinaria *arvore, void *dados);
 void arvore_binaria_remover(ArvoreBinaria *arvore, void *dados);
+void arvore_binaria_inverter_no(ArvoreBinariaNo *no);
+void arvore_binaria_inverter(ArvoreBinaria *arvore);
 void arvore_binaria_imprimir_no(ArvoreBinaria *arvore, ArvoreBinariaNo *no);
 void arvore_binaria_imprimir_no_ordem(ArvoreBinaria *arvore, ArvoreBinariaNo *no);
 void arvore_binaria_imprimir_no_pos_ordem(ArvoreBinaria *arvore, ArvoreBinariaNo *no);

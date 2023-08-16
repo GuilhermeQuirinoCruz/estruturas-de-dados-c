@@ -1,7 +1,7 @@
 #include <stdio.h>
 // #include <windows.h>
-#include "arvore_avl/arvore_avl.h"
-#include "tipos/inteiro.h"
+#include "../arvore_avl/arvore_avl.h"
+#include "../tipos/inteiro.h"
 
 void testa_arvore_avl_inteiro()
 {
@@ -38,7 +38,7 @@ void testa_arvore_avl_inteiro()
     printf("Removendo item [%d], que foi inserido duas vezes,\n", aux);
     arvore_avl_remover(arvore_inteiro, &aux);
     aux = 10;
-    printf("Removendo item [%d], que não está na árvore:\n", aux);
+    printf("Tentando remover item [%d], que não está na árvore:\n", aux);
     arvore_avl_remover(arvore_inteiro, &aux);
     arvore_avl_imprimir(arvore_inteiro);
 
@@ -52,7 +52,7 @@ void testa_arvore_avl_inteiro()
 
 int main()
 {
-    // gcc -o testa_arvore_avl.out testa_arvore_avl.c arvore_avl/arvore_avl.c tipos/inteiro.c
+    // gcc -o testa_arvore_avl.out testa_arvore_avl.c ../arvore_avl/arvore_avl.c ../tipos/inteiro.c
     // SetConsoleOutputCP(65001);
 
     testa_arvore_avl_inteiro();

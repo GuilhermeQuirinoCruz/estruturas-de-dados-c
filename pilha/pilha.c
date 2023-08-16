@@ -97,7 +97,7 @@ PilhaItem *pilha_base(Pilha *pilha)
 void pilha_limpar(Pilha *pilha)
 {
     if (pilha == NULL)
-        return NULL;
+        return;
     
     while(pilha->topo != NULL)
     {
@@ -108,7 +108,7 @@ void pilha_limpar(Pilha *pilha)
 void pilha_excluir(Pilha *pilha)
 {
     if (pilha == NULL)
-        return NULL;
+        return;
     
     pilha_limpar(pilha);
     free(pilha);
@@ -126,7 +126,7 @@ void pilha_inverter_itens(PilhaItem *item, PilhaItem *anterior)
 void pilha_inverter(Pilha *pilha)
 {
     if (pilha == NULL)
-        return NULL;
+        return;
     
     PilhaItem *base = pilha_base(pilha);
     pilha_inverter_itens(pilha->topo, NULL);
@@ -136,7 +136,7 @@ void pilha_inverter(Pilha *pilha)
 void pilha_copiar_itens(Pilha *pilha, Pilha *copia)
 {
     if (pilha == NULL || copia == NULL)
-        return NULL;
+        return;
     
     PilhaItem *item = pilha->topo;
     while (item != NULL)
@@ -161,7 +161,7 @@ Pilha *pilha_clonar(Pilha *pilha)
 void pilha_ordenar(Pilha *pilha)
 {
     if (pilha == NULL)
-        return NULL;
+        return;
     
     Pilha *pilha_ordenada = pilha_criar(pilha->liberar_dados, pilha->comparar_dados, pilha->alterar_dados, pilha->imprimir_dados, pilha->inserir_dados);
     PilhaItem *item;
@@ -187,7 +187,7 @@ void pilha_ordenar(Pilha *pilha)
 int pilha_contem(Pilha *pilha, void *dados)
 {
     if (pilha == NULL)
-        return NULL;
+        return 0;
     
     PilhaItem *item = pilha->topo;
     while (item != NULL)
@@ -204,7 +204,7 @@ int pilha_contem(Pilha *pilha, void *dados)
 void pilha_imprimir(Pilha *pilha)
 {
     if (pilha == NULL)
-        return NULL;
+        return;
     
     printf("- IMPRIMINDO PILHA -\n");
     printf("Tamanho: %d\n", pilha->tamanho);

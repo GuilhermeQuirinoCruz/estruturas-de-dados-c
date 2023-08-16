@@ -1,7 +1,7 @@
 #include <stdio.h>
 // #include <windows.h>
-#include "deque/deque.h"
-#include "tipos/inteiro.h"
+#include "../deque/deque.h"
+#include "../tipos/inteiro.h"
 
 void testa_deque_inteiro()
 {
@@ -48,15 +48,18 @@ void testa_deque_inteiro()
     aux = 3;
     deque_remover_por_dados(deque_inteiro, &aux);
     deque_imprimir(deque_inteiro);
-
-
+    
+    aux = 3;
+    printf("\nTentando remover item [%d], que não está no deque:\n", aux);
+    deque_remover_por_dados(deque_inteiro, &aux);
+    deque_imprimir(deque_inteiro);
 
     deque_excluir(deque_inteiro);
 }
 
 int main()
 {
-    // gcc -o testa_deque.out testa_deque.c deque/deque.c tipos/inteiro.c
+    // gcc -o testa_deque.out testa_deque.c ../deque/deque.c ../tipos/inteiro.c
     // SetConsoleOutputCP(65001);
 
     testa_deque_inteiro();

@@ -1,8 +1,8 @@
 #include <stdio.h>
 // #include <windows.h>
-#include "lista_ligada/lista_ligada.h"
-#include "tipos/inteiro.h"
-#include "tipos/string.h"
+#include "../lista_ligada/lista_ligada.h"
+#include "../tipos/inteiro.h"
+#include "../tipos/string.h"
 
 void testa_lista_ligada_inteiros()
 {
@@ -139,7 +139,7 @@ void testa_lista_ligada_strings()
 
 int main()
 {
-    // gcc -o testa_lista_ligada.out testa_lista_ligada.c lista_ligada/lista_ligada.c tipos/inteiro.c tipos/string.c
+    // gcc -o testa_lista_ligada.out testa_lista_ligada.c ../lista_ligada/lista_ligada.c ../tipos/inteiro.c ../tipos/string.c
     // SetConsoleOutputCP(65001);
 
     testa_lista_ligada_inteiros();

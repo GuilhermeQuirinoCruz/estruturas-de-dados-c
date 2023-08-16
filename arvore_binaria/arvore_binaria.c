@@ -202,11 +202,36 @@ void arvore_binaria_remover(ArvoreBinaria *arvore, void *dados)
         arvore_binaria_calcular_altura(arvore);
 }
 
+void arvore_binaria_inverter_no(ArvoreBinariaNo *no)
+{
+    if (no == NULL)
+        return;
+    
+    arvore_binaria_inverter_no(no->esquerda);
+    arvore_binaria_inverter_no(no->direita);
+
+    ArvoreBinariaNo *troca = no->esquerda;
+    no->esquerda = no->direita;
+    no->direita = troca;
+}
+
+void arvore_binaria_inverter(ArvoreBinaria *arvore)
+{
+    if (arvore == NULL)
+        return;
+    
+    arvore_binaria_inverter_no(arvore->raiz);
+}
+
 void arvore_binaria_imprimir_no(ArvoreBinaria *arvore, ArvoreBinariaNo *no)
 {
     if (arvore == NULL || no == NULL)
         return;
     
+    // inserir espaços para "desenhar" a árvore
+    // for (int i = 0; i < no->altura; i++)
+    //     printf("        ");
+
     printf("[%d] : ", no->altura);
     arvore->imprimir_dados(no->dados);
     printf("\n");

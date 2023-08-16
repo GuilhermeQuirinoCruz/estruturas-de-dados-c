@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "arvore_binaria/arvore_binaria.h"
-#include "tipos/inteiro.h"
+#include "../arvore_binaria/arvore_binaria.h"
+#include "../tipos/inteiro.h"
 
 void testa_arvore_binaria_inteiro()
 {
@@ -33,6 +33,34 @@ void testa_arvore_binaria_inteiro()
     printf("Imprimindo em pós-ordem:\n");
     arvore_binaria_imprimir(arvore_inteiro, POS_ORDEM);
 
+    printf("\nInvertendo:\n");
+    arvore_binaria_inverter(arvore_inteiro);
+    arvore_binaria_imprimir(arvore_inteiro, ORDEM);
+
+    printf("\nInvertendo novamente:\n");
+    arvore_binaria_inverter(arvore_inteiro);
+    arvore_binaria_imprimir(arvore_inteiro, ORDEM);
+
+    aux = 1;
+    arvore_binaria_inserir(arvore_inteiro, &aux);
+    aux = 2;
+    arvore_binaria_inserir(arvore_inteiro, &aux);
+    aux = 4;
+    arvore_binaria_inserir(arvore_inteiro, &aux);
+    aux = 7;
+    arvore_binaria_inserir(arvore_inteiro, &aux);
+    aux = 8;
+    arvore_binaria_inserir(arvore_inteiro, &aux);
+    aux = 11;
+    arvore_binaria_inserir(arvore_inteiro, &aux);
+    aux = 13;
+    arvore_binaria_inserir(arvore_inteiro, &aux);
+    aux = 16;
+    arvore_binaria_inserir(arvore_inteiro, &aux);
+    aux = 18;
+    arvore_binaria_inserir(arvore_inteiro, &aux);
+    arvore_binaria_imprimir(arvore_inteiro, ORDEM);
+
     aux = 5;
     printf("\nRemovendo item %d:\n", aux);
     arvore_binaria_remover(arvore_inteiro, &aux);
@@ -55,7 +83,7 @@ void testa_arvore_binaria_inteiro()
 
 int main()
 {
-    // gcc -o testa_arvore_binaria.out testa_arvore_binaria.c arvore_binaria/arvore_binaria.c tipos/inteiro.c
+    // gcc -o testa_arvore_binaria.out testa_arvore_binaria.c ../arvore_binaria/arvore_binaria.c ../tipos/inteiro.c
     // SetConsoleOutputCP(65001);
 
     testa_arvore_binaria_inteiro();

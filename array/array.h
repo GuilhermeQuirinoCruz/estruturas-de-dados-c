@@ -4,41 +4,43 @@
 #include <stdlib.h>
 
 typedef struct{
-    unsigned int tamanho;
-    unsigned int item_tamanho;
-    char *inicio;
-    void (*zerar_dados)(void *);
-    void (*liberar_dados)(void *);
-    int (*comparar_dados)(void *, void *);
-    void (*alterar_dados)(void *, void *);
-    void (*imprimir_dados)(void *);
-    void *(*inserir_dados)(void *);
+    unsigned int size;
+    unsigned int item_size;
+    char *start;
+    void (*data_clone)(void *, void *);
+    void (*data_clone_deep)(void *, void *);
+    void (*data_clear)(void *);
+    void (*data_free)(void *);
+    int (*data_compare)(void *, void *);
+    void (*data_print)(void *);
 } Array;
 
-int array_item_zero(Array *array, void *item);
-Array *array_criar(
-    unsigned int tamanho,
-    unsigned int item_tamanho,
-    void (*zerar_dados)(void *),
-    void (*liberar_dados)(void *),
-    int (*comparar_dados)(void *, void *),
-    void (*imprimir_dados)(void *));
-void array_limpar(Array *array);
-void array_excluir(Array *array);
-void array_item_set(Array *array, int i, void *dados);
-void *array_item_get(Array *array, int i);
-void array_item_insert(Array *array, int indice, void *dados);
-void array_item_trocar(Array *array, int i, int i2);
-void array_alterar_tamanho(Array *array, int tamanho);
-void array_imprimir(Array *array);
-void array_inverter(Array *array);
-Array *array_clonar(Array *array);
-void array_quicksort(Array *array, int inicio, int fim);
-void array_ordenar_quicksort(Array *array);
-void array_mergesort_intercalar(Array *array, Array *aux, int inicio, int meio, int fim);
-void array_mergesort(Array *array, Array *aux, int inicio, int fim);
-void array_ordenar_mergesort(Array *array);
-int array_busca_sequencial(Array *array, void *dados);
-int array_busca_binaria(Array *array, void *dados);
-void *array_minimo(Array *array);
-void *array_maximo(Array *array);
+int array_is_item_zero(Array *array, void *item);
+Array *array_new(
+    unsigned int size,
+    unsigned int item_size,
+    void (*data_clone)(void *, void *),
+    void (*data_clone_deep)(void *, void *),
+    void (*data_clear)(void *),
+    void (*data_free)(void *),
+    int (*data_compare)(void *, void *),
+    void (*data_print)(void *));
+void array_clear(Array *array);
+void array_free(Array *array);
+void array_item_set(Array *array, int index, void *data);
+void *array_item_get(Array *array, int index);
+void array_item_insert(Array *array, int index, void *data);
+void array_item_swap(Array *array, int i, int i2);
+void array_resize(Array *array, int new_size);
+void array_print(Array *array);
+void array_reverse(Array *array);
+Array *array_clone(Array *array);
+// void array_quicksort(Array *array, int start, int end);
+void array_sort_quicksort(Array *array);
+// void array_mergesort_merge(Array *array, Array *aux, int start, int mid, int end);
+// void array_mergesort(Array *array, Array *aux, int start, int end);
+void array_sort_mergesort(Array *array);
+int array_linear_search(Array *array, void *data);
+int array_binary_search(Array *array, void *data);
+void *array_min(Array *array);
+void *array_max(Array *array);

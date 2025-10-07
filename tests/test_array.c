@@ -1,5 +1,4 @@
 #include <stdio.h>
-// #include <windows.h>
 #include "../array/array.h"
 #include "../types/integer.h"
 
@@ -132,11 +131,6 @@ void test_int_array()
 
 int main()
 {
-    // gcc -o test_array.out test_array.c ../array/array.c ../types/integer.c && ./test_array.out
-    // gcc -o tests/test_array.out tests/test_array.c array/array.c types/integer.c && tests/test_array.out
-
-    // SetConsoleOutputCP(65001);
-
     test_int_array();
 
     return 0;

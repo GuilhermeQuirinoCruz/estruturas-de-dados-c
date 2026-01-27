@@ -2,6 +2,8 @@
 
 int string_size(void *string);
 void *string_new(void *data);
+void string_clone(void *src, void *dest);
+void string_clone_deep(void *src, void *dest);
 void string_clear(void *string);
 void string_free(void *string);
 int string_compare(void *str1, void *str2);

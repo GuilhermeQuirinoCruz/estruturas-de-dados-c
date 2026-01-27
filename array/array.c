@@ -86,6 +86,16 @@ void array_free(Array *array)
     free(array);
 }
 
+void array_item_set_multiple(Array *array, int start, int count, void *data)
+{
+    void *item = data;
+    for (int i = 0; i < count; i++)
+    {
+        array_item_set(array, start + i, item);
+        item = item + array->item_size;
+    }
+}
+
 // TODO: accept literals instead of pointers for data
 void array_item_set(Array *array, int index, void *data)
 {
@@ -119,12 +129,6 @@ void array_item_insert(Array *array, int index, void *data)
 
     array_resize(array, array->size + 1);
 
-    // printf("here");
-    // return;
-
-    // [1 2 3 4]
-    // [1 2 3 4 0]
-    // []
     char *start = array_item_get(array, index);
     memcpy(start + array->item_size, start, (array->size - 1 - index) * array->item_size);
 
@@ -342,7 +346,7 @@ int array_binary_search(Array *array, void *data)
     void *item_mid;
     int comparison;
 
-    while (start < end)
+    while (start <= end)
     {
         mid = (start + end) / 2;
         item_mid = array_item_get(array, mid);

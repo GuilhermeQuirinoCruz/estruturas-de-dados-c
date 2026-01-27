@@ -15,6 +15,16 @@ void *string_new(void *data)
     return string;
 }
 
+void string_clone(void *src, void *dest)
+{
+    strcpy((char *)dest, (char *)src);
+}
+
+void string_clone_deep(void *src, void *dest)
+{
+    strcpy((char *)dest, (char *)src);
+}
+
 void string_clear(void *string)
 {
     ((char *)string)[0] = 0;

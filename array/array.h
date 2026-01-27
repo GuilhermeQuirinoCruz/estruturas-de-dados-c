@@ -27,6 +27,7 @@ Array *array_new(
     void (*data_print)(void *));
 void array_clear(Array *array);
 void array_free(Array *array);
+void array_item_set_multiple(Array *array, int start, int count, void *data);
 void array_item_set(Array *array, int index, void *data);
 void *array_item_get(Array *array, int index);
 void array_item_insert(Array *array, int index, void *data);

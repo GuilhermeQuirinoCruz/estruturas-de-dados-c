@@ -1,5 +1,11 @@
 #pragma once
 
+typedef struct String
+{
+    unsigned int size;
+    char *data;
+} String;
+
 int string_size(void *string);
 void *string_new(void *data);
 void string_clone(void *src, void *dest);

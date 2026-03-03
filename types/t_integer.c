@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "integer.h"
+#include "t_integer.h"
 
 int integer_size()
 {

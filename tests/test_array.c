@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "../array/array.h"
-#include "../types/integer.h"
-#include "../types/string.h"
+#include "../types/t_integer.h"
+#include "../types/t_string.h"
 
 void test_int_array()
 {
@@ -130,7 +130,7 @@ void test_string_array()
     array_print(array_string);
 
     printf("\n- SETTING VALUES -\n");
-    char *aux = "A";
+    char *aux = "ABCD";
     array_item_set(array_string, 0, &aux);
 
     array_print(array_string);
@@ -195,7 +195,7 @@ int main()
     test_int_array();
     // test_string_array();
 
-    // gcc -o ./tests/test_array.out tests/test_array.c ./array/array.c ./types/integer.c ./types/string.c && ./tests/test_array.out
+    // gcc -o ./tests/test_array.out tests/test_array.c ./array/array.c ./types/t_integer.c ./types/t_string.c && ./tests/test_array.out
 
     return 0;
 }

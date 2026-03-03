@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "string.h"
+#include "t_string.h"
 
 int string_size(void *string)
 {
@@ -10,7 +10,9 @@ int string_size(void *string)
 
 void *string_new(void *data)
 {
-    char *string = strdup((char *)data);
+    String *string = malloc(sizeof(String));
+    string->data = strdup((char *)data);
+    string->size = strlen(string->data);
 
     return string;
 }
